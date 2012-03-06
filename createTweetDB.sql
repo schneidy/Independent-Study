@@ -15,12 +15,11 @@ CREATE  TABLE IF NOT EXISTS `superTueTweets`.`SuperTuesday` (
   `tweet_id` VARCHAR(25) NOT NULL ,
   `user` VARCHAR(60) NULL ,
   `user_id` VARCHAR(60) NULL ,
-  `created_at` DATETIME NULL ,
+  `created_at` VARCHAR(45) NULL ,
   `text` VARCHAR(160) NULL ,
   `geo` VARCHAR(45) NULL ,
   `coordinates` VARCHAR(45) NULL ,
-  `scraped_at` DATETIME NULL ,
-  `source` VARCHAR(140) NULL ,
+  `scraped_at` VARCHAR(45) NULL ,
   PRIMARY KEY (`tweet_id`) )
 ENGINE = InnoDB;
 
@@ -34,12 +33,11 @@ CREATE  TABLE IF NOT EXISTS `superTueTweets`.`Romney` (
   `tweet_id` VARCHAR(25) NOT NULL ,
   `user` VARCHAR(60) NULL ,
   `user_id` VARCHAR(60) NULL ,
-  `created_at` DATETIME NULL ,
+  `created_at` VARCHAR(45) NULL ,
   `text` VARCHAR(160) NULL ,
   `geo` VARCHAR(45) NULL ,
   `coordinates` VARCHAR(45) NULL ,
-  `scraped_at` DATETIME NULL ,
-  `source` VARCHAR(140) NULL ,
+  `scraped_at` VARCHAR(45) NULL ,
   PRIMARY KEY (`tweet_id`) )
 ENGINE = InnoDB;
 
@@ -53,12 +51,11 @@ CREATE  TABLE IF NOT EXISTS `superTueTweets`.`Santorum` (
   `tweet_id` VARCHAR(25) NOT NULL ,
   `user` VARCHAR(60) NULL ,
   `user_id` VARCHAR(60) NULL ,
-  `created_at` DATETIME NULL ,
+  `created_at` VARCHAR(45) NULL ,
   `text` VARCHAR(160) NULL ,
   `geo` VARCHAR(45) NULL ,
   `coordinates` VARCHAR(45) NULL ,
-  `scraped_at` DATETIME NULL ,
-  `source` VARCHAR(140) NULL ,
+  `scraped_at` VARCHAR(45) NULL ,
   PRIMARY KEY (`tweet_id`) )
 ENGINE = InnoDB;
 
@@ -72,12 +69,11 @@ CREATE  TABLE IF NOT EXISTS `superTueTweets`.`RonPaul` (
   `tweet_id` VARCHAR(25) NOT NULL ,
   `user` VARCHAR(60) NULL ,
   `user_id` VARCHAR(60) NULL ,
-  `created_at` DATETIME NULL ,
+  `created_at` VARCHAR(45) NULL ,
   `text` VARCHAR(160) NULL ,
   `geo` VARCHAR(45) NULL ,
   `coordinates` VARCHAR(45) NULL ,
-  `scraped_at` DATETIME NULL ,
-  `source` VARCHAR(140) NULL ,
+  `scraped_at` VARCHAR(45) NULL ,
   PRIMARY KEY (`tweet_id`) )
 ENGINE = InnoDB;
 
@@ -91,12 +87,11 @@ CREATE  TABLE IF NOT EXISTS `superTueTweets`.`Gingrich` (
   `tweet_id` VARCHAR(25) NOT NULL ,
   `user` VARCHAR(60) NULL ,
   `user_id` VARCHAR(60) NULL ,
-  `created_at` DATETIME NULL ,
+  `created_at` VARCHAR(45) NULL ,
   `text` VARCHAR(160) NULL ,
   `geo` VARCHAR(45) NULL ,
   `coordinates` VARCHAR(45) NULL ,
-  `scraped_at` DATETIME NULL ,
-  `source` VARCHAR(140) NULL ,
+  `scraped_at` VARCHAR(45) NULL ,
   PRIMARY KEY (`tweet_id`) )
 ENGINE = InnoDB;
 
@@ -110,12 +105,11 @@ CREATE  TABLE IF NOT EXISTS `superTueTweets`.`Obama` (
   `tweet_id` VARCHAR(25) NOT NULL ,
   `user` VARCHAR(60) NULL ,
   `user_id` VARCHAR(60) NULL ,
-  `created_at` DATETIME NULL ,
+  `created_at` VARCHAR(45) NULL ,
   `text` VARCHAR(160) NULL ,
   `geo` VARCHAR(45) NULL ,
   `coordinates` VARCHAR(45) NULL ,
-  `scraped_at` DATETIME NULL ,
-  `source` VARCHAR(140) NULL ,
+  `scraped_at` VARCHAR(45) NULL ,
   PRIMARY KEY (`tweet_id`) )
 ENGINE = InnoDB;
 
@@ -129,12 +123,11 @@ CREATE  TABLE IF NOT EXISTS `superTueTweets`.`allTweets` (
   `tweet_id` VARCHAR(25) NOT NULL ,
   `user` VARCHAR(60) NULL ,
   `user_id` VARCHAR(60) NULL ,
-  `created_at` DATETIME NULL ,
+  `created_at` VARCHAR(45) NULL ,
   `text` VARCHAR(160) NULL ,
   `geo` VARCHAR(45) NULL ,
   `coordinates` VARCHAR(45) NULL ,
-  `scraped_at` DATETIME NULL ,
-  `source` VARCHAR(140) NULL ,
+  `scraped_at` VARCHAR(45) NULL ,
   PRIMARY KEY (`tweet_id`) )
 ENGINE = InnoDB;
 
