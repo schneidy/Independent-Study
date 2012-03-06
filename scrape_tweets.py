@@ -19,9 +19,14 @@ def insertToDB(con, table_name, tweet_id, twitter_user, user_id, created_at, tex
         special_table_insert += 'VALUES("' + str(tweet_id) +'", "' + str(twitter_user) + '", "' + str(user_id) + '", "' + str(created_at) + '", "' + str(text) + '", "' + str(geo) + '",'
         special_table_insert += ' "' + str(coordinates) + '", "' + str(scraped_at) + '")'
 
+        try:
         # Executing queries
-        cur.execute(main_insert)
-        cur.execute(special_table_insert)
+            cur.execute(main_insert)
+            cur.execute(special_table_insert)
+        except IndentationError:
+            pass
+        except:
+            pass
 
 
 # Main objects
@@ -33,7 +38,7 @@ query_subjects = ["Super Tuesday", "Romney", "Santorum", "Ron Paul", "Gingrich",
 for query in query_subjects:
     table_name = query if query != "Super Tuesday" else "SuperTuesday"
     for page_num in range(1,4):
-        search_results = twitter.searchTwitter(q=query, rpp="10", result_type="current", page=str(page_num))
+        search_results = twitter.searchTwitter(q=query, rpp="100", result_type="current", page=str(page_num))
         for tweet in search_results["results"]:
             tweet_id = tweet['id_str']
             user = tweet['from_user'].encode('utf-8')
