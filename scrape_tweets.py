@@ -24,4 +24,19 @@ for tweet in search_results["results"]:
     source = tweet['source']
 
 def insertToDB(self, table_name):
-   con = mdb.connect(host, user, password, db)
+    con = mdb.connect(host, user, password, db)
+    with con:
+        cur = con.cursor()
+        
+        # Queries
+        main_insert = "INSERT INTO allTweets(tweet_id, user, user_id, created_at, text, geo, coordinates, scraped_at, source) "
+        main_insert += "VALUES('" + tweet_id +"', '" + twitter_user + "', '", + user_id + "', '" + created_at + "', '" + text + "', '" + geo + "',"
+        main_insert += coordinates + "', '" + scraped_at + "', '" + source +  "')"
+        
+        special_table_insert = "INSERT INTO " + table_name + "(tweet_id, user, user_id, created_at, text, geo, coordinates, scraped_at, source) "
+        special_table_insert += "VALUES('" + tweet_id +"', '" + twitter_user + "', '", + user_id + "', '" + created_at + "', '" + text + "', '" + geo + "',"
+        special_table_insert += coordinates + "', '" + scraped_at + "', '" + source +  "')"
+
+        # Executing queries
+        cur.execute(main_insert)
+        cur.execute(special_table_insert)
