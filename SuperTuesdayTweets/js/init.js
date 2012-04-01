@@ -3,8 +3,12 @@ var primaryStates = ["Alaska", "Georgia", "Idaho", "Massachusetts",
     "North Dakota", "Ohio", "Oklahoma", "Tennessee", "Vermont", "Virginia"];
 
 
-$(document).ready(function() {
-    
+$(document).ready(function(){
+    overallInit();
+});
+
+function overallInit(){
+
     //Initial State map code from the D3 library "symbol-map" example.
     // The radius scale for the centroids.
     //var r = d3.scale.sqrt()
@@ -48,5 +52,5 @@ $(document).ready(function() {
                 .delay(function(d, i) { return i * 50; })
                 .attr("r", function(d) { return r(d.properties.population); });
     });*/
-});
+};
 
