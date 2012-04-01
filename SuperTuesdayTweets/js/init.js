@@ -1,3 +1,8 @@
+// Global information
+var primaryStates = ["Alaska", "Georgia", "Idaho", "Massachusetts", 
+    "North Dakota", "Ohio", "Oklahoma", "Tennessee", "Vermont", "Virginia"];
+
+
 $(document).ready(function() {
     
     //Initial State map code from the D3 library "symbol-map" example.
@@ -19,8 +24,13 @@ $(document).ready(function() {
             .data(collection.features)
             .enter().append("path")
             .attr("d", d3.geo.path().projection(xy))
-            .attr("stateName", function(q) {return q.properties.name;})
-            .attr("onclick", function(q) {return 'console.log("' + q.properties.name + '")';});
+            .attr("id", function(q) {return q.properties.name.split(' ').join('');})
+            .attr("onclick", function(q) {return 'console.log("' + q.properties.name + '")';})
+            .style("fill", function(q) {
+                if(window.primaryStates.indexOf(q.properties.name) != -1){
+                    return "red";
+                }
+            });
     });
 
 
@@ -38,4 +48,5 @@ $(document).ready(function() {
                 .delay(function(d, i) { return i * 50; })
                 .attr("r", function(d) { return r(d.properties.population); });
     });*/
-}); 
+});
+
