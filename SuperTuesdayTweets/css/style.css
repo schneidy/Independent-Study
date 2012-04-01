@@ -1,5 +1,5 @@
 header{
-	height: 200px;
+	height: 100px;
 	width: 800px;
 	margin: 0 auto 0 auto;
 }
@@ -28,5 +28,17 @@ nav li{
 }
 
 nav li:hover{
-	border-bottom: 4px solid #252525;
+	border-bottom: 4px solid #252525; 
+}
+
+
+#states path, #state-centroids circle {
+    fill: #ccc;
+    stroke: #fff;
+    stroke-width: 1.5px;
+}
+
+#state-centroids circle {
+    fill: steelblue;
+    fill-opacity: .8;
 }
