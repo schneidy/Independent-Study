@@ -2,11 +2,16 @@
 var primaryStates = ["Alaska", "Georgia", "Idaho", "Massachusetts", 
     "North Dakota", "Ohio", "Oklahoma", "Tennessee", "Vermont", "Virginia"];
 
+var twitterSearches = ["All Tweets", "Super Tuesday", "Obama", "Romney",
+    "Santorum", "Gingrich", "Santorum"];
 
+// Inital loading
 $(document).ready(function(){
     overallInit();
 });
 
+
+// Loading of overall viz
 function overallInit(){
 
     //Initial State map code from the D3 library "symbol-map" example.
@@ -18,10 +23,16 @@ function overallInit(){
     // Our projection.
     var xy = d3.geo.albersUsa();
 
+    // Main SVG container
     var svg = d3.select("#viz").append("svg");
+    svg.attr("id", "mainSVG");
     svg.append("g").attr("id", "states");
-    svg.append("g").attr("id", "state-centroids");
+    
+    // Side Bar for tweet information
+    var tweetBar = d3.select("#viz").append("div");
+    tweetBar.attr("id", "tweetSearches");
 
+    // Adding States
     d3.json("../json/us-states.json", function(collection) {
           svg.select("#states")
             .selectAll("path")
@@ -37,6 +48,16 @@ function overallInit(){
             });
     });
 
+    
+    // Adding Twitter Searches
+    for(search in twitterSearches){
+        d3.select("#tweetSearches")
+            .append("div")
+                .attr("class", "twitTopics")
+                .attr("id", twitterSearches[search].split(' ').join(''))
+                .text(twitterSearches[search])
+            ;
+    };
 
     // Exmaple code
     /*d3.json("../json/us-state-centroids.json", function(collection) {
@@ -53,4 +74,31 @@ function overallInit(){
                 .attr("r", function(d) { return r(d.properties.population); });
     });*/
 };
+
+
+// returns number of rows
+function numRows(){
+    var jsonInfo = d3.text("../CSVs/ronpaul.csv", function(datasetText){
+            var parsedCSV = d3.csv.parseRows(datasetText);
+
+            var sampleHTML = d3.select("body")
+                .append("table")
+                .style("border-collapse", "collapse")
+                .style("border", "2px black solid")
+
+                .selectAll("tr")
+                .data(parsedCSV)
+                .enter().append("tr")
+
+                .selectAll("td")
+                .data(function(d){return d;})
+                .enter().append("td")
+                .style("border", "1px black solid")
+                .style("padding", "5px")
+                .text(function(d){return d;})
+                .style("font-size", "12px");
+
+    });
+}
+
 
