@@ -31,6 +31,25 @@ nav li:hover{
 	border-bottom: 4px solid #252525; 
 }
 
+#viz{
+    display: inline;
+    margin: 35px auto 0 auto;
+    width: 1050px;
+}
+
+#mainSVG{
+    float: left;
+    margin-top: 50px;
+    width: 900px;
+}
+
+#tweetSearches{
+    float: left;
+    margin-top: 50px;
+    margin-left: 60px;
+    width: 150px;
+}
+
 
 #states path, #state-centroids circle {
     fill: #ccc;
@@ -38,7 +57,4 @@ nav li:hover{
     stroke-width: 1.5px;
 }
 
-#state-centroids circle {
-    fill: steelblue;
-    fill-opacity: .8;
-}
+
