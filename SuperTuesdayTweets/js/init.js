@@ -49,15 +49,22 @@ function overallInit(){
     });
 
     
+
     // Adding Twitter Searches
-    for(search in twitterSearches){
+    d3.json("http://localhost/php/lib.php?tableNames", function(json){
         d3.select("#tweetSearches")
+            .selectAll("p")
+            .data(json.tweets)
+            .enter()
             .append("div")
-                .attr("class", "twitTopics")
-                .attr("id", twitterSearches[search].split(' ').join(''))
-                .text(twitterSearches[search])
-            ;
-    };
+            .attr("class", "twitTopics")
+            .attr("id", function(d){return d.tweet.Tables_in_superTueTweets;})
+            .text(function(d){
+                var tweetSubjects = d.tweet.Tables_in_superTueTweets.replace( /([a-z])([A-Z])/, "$1 $2");
+                var numTweets = numOfTweets(d.tweet.Tables_in_superTueTweets);
+                return tweetSubjects;
+            });
+    });
 
     // Exmaple code
     /*d3.json("../json/us-state-centroids.json", function(collection) {
@@ -75,30 +82,14 @@ function overallInit(){
     });*/
 };
 
-
-// returns number of rows
-function numRows(){
-    var jsonInfo = d3.text("../CSVs/ronpaul.csv", function(datasetText){
-            var parsedCSV = d3.csv.parseRows(datasetText);
-
-            var sampleHTML = d3.select("body")
-                .append("table")
-                .style("border-collapse", "collapse")
-                .style("border", "2px black solid")
-
-                .selectAll("tr")
-                .data(parsedCSV)
-                .enter().append("tr")
-
-                .selectAll("td")
-                .data(function(d){return d;})
-                .enter().append("td")
-                .style("border", "1px black solid")
-                .style("padding", "5px")
-                .text(function(d){return d;})
-                .style("font-size", "12px");
-
+//returns the number of tweets
+function numOfTweets(subject){
+    var url ="http://localhost/php/lib.php?topic="+subject+"&count";
+    return d3.json(url, function(json){
+        d3.select("#tweetSearches")
+            .data(json.tweets)
+            .enter(function(d){
+                return d.tweet.count;
+                })
     });
 }
-
-
