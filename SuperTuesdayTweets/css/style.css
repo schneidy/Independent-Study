@@ -47,7 +47,7 @@ nav li:hover{
     float: left;
     margin-top: 50px;
     margin-left: 60px;
-    width: 150px;
+    width: 250px;
 }
 
 
@@ -55,6 +55,16 @@ nav li:hover{
     fill: #ccc;
     stroke: #fff;
     stroke-width: 1.5px;
+}
+
+.twitTopics{
+	-moz-column-count: 2;
+    -moz-column-gap: px;
+    -webkit-column-count: 2;
+    -webkit-column-gap: px;
+    column-count: 2;
+	column-gap: px;
+        
 }
 
 
