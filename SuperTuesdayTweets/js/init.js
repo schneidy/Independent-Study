@@ -59,11 +59,15 @@ function overallInit(){
             .append("div")
             .attr("class", "twitTopics")
             .attr("id", function(d){return d.tweet.Tables_in_superTueTweets;})
+            .append("p")
             .text(function(d){
                 var tweetSubjects = d.tweet.Tables_in_superTueTweets.replace( /([a-z])([A-Z])/, "$1 $2");
-                var numTweets = numOfTweets(d.tweet.Tables_in_superTueTweets);
                 return tweetSubjects;
             });
+            //test code below
+            
+            d3.selectAll(".twitTopics")[0].forEach(function (f){numTweets(f)})
+            ;
     });
 
     // Exmaple code
@@ -82,14 +86,13 @@ function overallInit(){
     });*/
 };
 
-//returns the number of tweets
-function numOfTweets(subject){
-    var url ="http://localhost/php/lib.php?topic="+subject+"&count";
-    return d3.json(url, function(json){
-        d3.select("#tweetSearches")
-            .data(json.tweets)
-            .enter(function(d){
-                return d.tweet.count;
-                })
+
+// returns the number of tweets
+function numTweets(topic){
+    var url ="http://localhost/php/lib.php?topic="+topic.id.toString()+"&count";
+    d3.json(url, function(json){
+        var num = json.tweets[0].tweet.numTweets;
+        d3.select(topic).append("p").text(num);
     });
 }
+
