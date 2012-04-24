@@ -1,3 +1,8 @@
+body{
+	background-color: #F2F6E2;
+	font-family: "museo-slab-1","museo-slab-2", Georgia, "Times New Roman", Times, serif
+}
+
 header{
 	height: 100px;
 	width: 800px;
@@ -6,7 +11,8 @@ header{
 
 header h1{
 	font-size: 40px;
-	text-align: center;
+	text-align: right;
+	background: url(http://static.openstates.org/assets/v1/images/openstateslogo.png) left top no-repeat;
 }
 
 
@@ -20,11 +26,13 @@ header h1{
     float: left;
     margin-top: 50px;
     width: 900px;
+    min-height: 800px;
+    background-color: #F2F6E2;
 }
 
 #states path{
     fill: #ccc;
-    stroke: #fff;
+    stroke: #F2F6E2;
     stroke-width: 1.5px;
 }
 
