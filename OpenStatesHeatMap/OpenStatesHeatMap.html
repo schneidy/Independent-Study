@@ -16,7 +16,7 @@
 <div id="viz">
 </div>
 <div id="sideBar">
-<select id="topics" onchange="topicSelection(this.value)">
+	<select id="topics" onchange="topicSelection(this.value)">
 	<option value="Topic" disabled="disabled" selected="selected">Topic</option>
 	<option value="Abortion">Abortion</option>
 	<option value="Agriculture">Agriculture</option>
@@ -69,6 +69,10 @@
     <option value="Welfare">Welfare</option>
     <option value="Wildlife">Wildlife</option>
 </select>
+	<form>
+		<input type="text" placeholder="Seach a topic" id="searchBar"/>
+  		<input type="button" value="Search" onclick="topicSelection(searchBar.value)" id="searchButton" />
+	</form>
 </div>
 </body>
 </html>
