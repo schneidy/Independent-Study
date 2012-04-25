@@ -1,5 +1,5 @@
 //Globals
-var data = [];
+var data = {};
 var tooltip;
 
 // Inital loading
@@ -37,6 +37,7 @@ function overallInit(){
         .style("position", "absolute")
         .style("z-index", "10")
         .style("visibility", "hidden")
+
 };
 
 // Topic Selection and coloring
@@ -46,12 +47,14 @@ function topicSelection(topic){
         //cleans up the state id
         var stateName = state.id.replace( /([a-z])([A-Z])/, "$1 $2").replace( /([a-z])([A-Z])/, "$1 $2");
         var abbr = stateAbbr[stateName];
-        var url = "php/proxy.php?topic="+topic+"&state="+abbr;
+        var url = "php/proxy.php?topic="+topic+"&state="+abbr+"&billSearch=true";
         d3.json(url, function(json){
             var numBills = json.length;
-            var color =  d3.scale.category20c();
-            data.push({state : state.id, billTotal : numBills});
-            data = data.sort(function(a, b){return b.billTotal - a.billTotal})
+            var color = d3.scale.category20c();
+            var bills = json;
+            bills = bills.sort(function(a,b){return Date(b.created_at) - Date(a.created_at)});
+            data.push({state : state.id, topBills : bills.splice(0, 10)});
+            //data = data.sort(function(a, b){return b.billTotal - a.billTotal})
             
             d3.select(state).transition().duration(1000).style("fill", function(){
                 var newColor;
@@ -87,7 +90,8 @@ function topicSelection(topic){
                     .append("p").text("Total Bills: " + numBills);
                 })
             .on("mousemove", function(){return d3.select("#tooltip").style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
-            .on("mouseout", function(){return d3.select("#tooltip").style("visibility", "hidden");});
+            .on("mouseout", function(){return d3.select("#tooltip").style("visibility", "hidden");})
+            .on("mousedown", function(){displayBills(state.id, topic)})
             ;
         });
 
@@ -95,3 +99,37 @@ function topicSelection(topic){
 
 };
 
+
+// Displays the most recent bills on the subject (10 max)
+function displayBills(stateID, topic){
+
+    //clears bills if there are any.
+    d3.select("#bills").selectAll("p").remove()
+    d3.select("#bills").selectAll("h3").remove();
+
+    data.forEach(function(json){
+        if(json.state === stateID){
+            // If no bills in that subject found
+            if(json.topBills.length == 0){
+                d3.select("#bills")
+                    .append("h3")
+                    .text("There are no bills on " + topic);
+            }else{
+                // Displaying the bills
+                d3.select("#bills")
+                    .append("h3")
+                    .text(json.topBills.length + " recent bills found on " + topic);
+                
+                
+                json.topBills.forEach(function(bill){
+                    //Number of Bills
+                    d3.select("#bills")
+                        .append("p")
+                        .text(bill.bill_id);
+
+                    //console.log(bill.bill_id);
+                });
+            }
+        }
+    });
+}
