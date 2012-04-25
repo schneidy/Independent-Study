@@ -1,6 +1,5 @@
 body{
 	background-color: #F2F6E2;
-	font-family: "museo-slab-1","museo-slab-2", Georgia, "Times New Roman", Times, serif
 }
 
 header{
@@ -11,29 +10,45 @@ header{
 
 header h1{
 	font-size: 40px;
-	text-align: cneter;
+	text-align: center;
 }
-
 
 #viz{
     display: inline;
+    height: 600px;
     margin: 35px auto 0 auto;
     width: 1050px;
 }
 
 #mainSVG{
+    background-color: #F2F6E2;
     float: left;
     margin-top: 50px;
-    width: 900px;
-    min-height: 800px;
-    background-color: #F2F6E2;
+    height: 500px;
+    padding: 0 0 20px 0px;
+    width: 950px;
 }
 
 #states path{
     fill: #ccc;
-    stroke: #F2F6E2;
+    stroke: #dbdece;
     stroke-width: 1.5px;
 }
 
+#tooltip{
+    background-color: #fff;
+    opacity:0.8;
+    height: 50px;
+    width: 110px;
 
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    border-color:#000;
+    border-style: solid;
+    border-width:2px;
+}
 
+#tooltip p{
+    margin: 5px 0 2px 4px;
+}
