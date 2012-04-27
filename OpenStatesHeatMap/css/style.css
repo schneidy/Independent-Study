@@ -1,5 +1,5 @@
 body{
-	background-color: #F2F6E2;
+	background-color: #FFF;
 }
 
 header{
@@ -21,7 +21,7 @@ header h1{
 }
 
 #mainSVG{
-    background-color: #F2F6E2;
+    background-color: #FFF;
     float: left;
     margin-top: 50px;
     height: 500px;
