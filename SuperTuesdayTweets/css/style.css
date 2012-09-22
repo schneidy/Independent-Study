@@ -33,12 +33,14 @@ nav li:hover{
 
 #viz{
     display: inline;
+    height: 600px;
     margin: 35px auto 0 auto;
     width: 1050px;
 }
 
 #mainSVG{
     float: left;
+    height: 500px;
     margin-top: 50px;
     width: 900px;
 }

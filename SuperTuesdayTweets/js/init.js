@@ -40,7 +40,7 @@ function overallInit(){
             .enter().append("path")
             .attr("d", d3.geo.path().projection(xy))
             .attr("id", function(q) {return q.properties.name.split(' ').join('');})
-            .attr("onclick", function(q) {return 'console.log("' + q.properties.name + '")';})
+            .attr("onclick", function(q) {return "stateInit(this)";})
             .style("fill", function(q) {
                 if(window.primaryStates.indexOf(q.properties.name) != -1){
                     return "red";

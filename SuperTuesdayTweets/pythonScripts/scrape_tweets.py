@@ -51,5 +51,6 @@ for query in query_subjects:
             coordinates = geo['coordinates'] if geo != None else "null"
             scraped_at = datetime.now()
             source = tweet['source']
-            insertToDB(con, table_name, tweet_id, user, user_id, created_at, text, geo, coordinates, scraped_at, source);
+            print text
+            #insertToDB(con, table_name, tweet_id, user, user_id, created_at, text, geo, coordinates, scraped_at, source);
 
