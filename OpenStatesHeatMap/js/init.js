@@ -47,7 +47,8 @@ function topicSelection(topic){
         //cleans up the state id
         var stateName = state.id.replace( /([a-z])([A-Z])/, "$1 $2").replace( /([a-z])([A-Z])/, "$1 $2");
         var abbr = stateAbbr[stateName];
-        var url = "php/proxy.php?topic="+topic+"&state="+abbr+"&billSearch=true";
+        var cleanTopic = topic.replace(/\s/g, '').replace(/\,/g,"");
+        var url = "../json/" + abbr + "-" + cleanTopic + '.json';
         d3.json(url, function(json){
             var numBills = json.length;
             var color = d3.scale.category20c();
