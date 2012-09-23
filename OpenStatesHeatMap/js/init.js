@@ -41,14 +41,14 @@ function overallInit(){
 };
 
 // Topic Selection and coloring
-function topicSelection(topic){
+function topicSelection(topic, topicMethod){
     data = [];
     d3.selectAll("path")[0].forEach(function(state){
         //cleans up the state id
         var stateName = state.id.replace( /([a-z])([A-Z])/, "$1 $2").replace( /([a-z])([A-Z])/, "$1 $2");
         var abbr = stateAbbr[stateName];
         var cleanTopic = topic.replace(/\s/g, '').replace(/\,/g,"");
-        var url = "../json/" + abbr + "-" + cleanTopic + '.json';
+        var url = topicMethod == 'dropdown' ? "../json/" + abbr + "-" + cleanTopic + '.json' : "php/proxy.php?topic="+topic+"&state="+abbr+"&billSearch=true";
         d3.json(url, function(json){
             var numBills = json.length;
             var color = d3.scale.category20c();
