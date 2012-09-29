@@ -1,5 +1,5 @@
 //Globals
-var data = {};
+var data;
 var tooltip;
 
 // Inital loading
@@ -17,17 +17,22 @@ function overallInit(){
     // Main SVG container
     var svg = d3.select("#viz").append("svg");
     svg.attr("id", "mainSVG");
-    svg.append("g").attr("id", "states");
+
+
+    //Preping states
+    var states = svg.append("g")
+        .attr("id", "states")
+        .attr("class", "Blues");
 
     // Adding States
     d3.json("json/us-states.json", function(collection) {
-          svg.select("#states")
-            .selectAll("path")
+        states.selectAll("path")
             .data(collection.features)
             .enter().append("path")
+            .attr("class", data ? quantize : null)
             .attr("d", d3.geo.path().projection(xy))
             .attr("id", function(q) {return q.properties.name.split(' ').join('');})
-            ;
+            .attr("class", data ? quantize : null);
     });
 
     // Adding inital tooltip
@@ -36,66 +41,42 @@ function overallInit(){
         .attr("id", "tooltip")
         .style("position", "absolute")
         .style("z-index", "10")
-        .style("visibility", "hidden")
+        .style("visibility", "hidden");
 
 };
 
 // Topic Selection and coloring
 function topicSelection(topic, topicMethod){
-    data = [];
-    d3.selectAll("path")[0].forEach(function(state){
-        //cleans up the state id
-        var stateName = state.id.replace( /([a-z])([A-Z])/, "$1 $2").replace( /([a-z])([A-Z])/, "$1 $2");
-        var abbr = stateAbbr[stateName];
-        var cleanTopic = topic.replace(/\s/g, '').replace(/\,/g,"");
-        var url = topicMethod == 'dropdown' ? "../json/" + abbr + "-" + cleanTopic + '.json' : "php/proxy.php?topic="+topic+"&state="+abbr+"&billSearch=true";
-        d3.json(url, function(json){
-            var numBills = json.length;
-            var color = d3.scale.category20c();
-            var bills = json;
-            data.push({state : state.id, topBills : bills.splice(0, 10)});
-            
-            d3.select(state).transition().duration(1000).style("fill", function(){
-                var newColor;
-                var multiplier = .9;
-                if(numBills <= 100){
-                    newColor = d3.hsl(100, 10, (1 - numBills/150) * multiplier);
-                }else if(numBills > 100 && numBills <= 250){
-                   // Green for total bills over 100
-                   newColor = d3.hsl(125, 10, (1 - numBills/300) * multiplier);
-                }else if(numBills > 250 && numBills <= 1000){
-                    // Blue for total bills over 250
-                    newColor = d3.hsl(150, 10, (1 - numBills/1050) * multiplier);
-                }else{ 
-                    // Purple for total bills over 1000
-                    newColor = d3.hsl(175, 10, (1 - numBills/2550) * multiplier);
-                }
+    
+    var cleanTopic = topic.replace(/\s/g, '').replace(/\,/g,"");
+    var url = "../json/totalBills/totalBills-" + cleanTopic + '.json';
+    d3.json(url, function(json){
+        data = json;
+        fill = d3.scale.linear().domain([data.smallest_amount_bills, data.largest_amount_bills]).range(["lightgreen", "darkgreen"]);
+        tooltip = d3.select("#tooltip");
 
-                return newColor;
+        d3.select(states).selectAll("path")
+            .transition().duration(1000)
+            .style('fill', function(d){
+                var state_name = d.properties.name.replace( /([a-z])([A-Z])/, "$1 $2").replace( /([a-z])([A-Z])/, "$1 $2");
+                var abbr = stateAbbr[state_name];
+                return fill(data[abbr].totalBills);
+                }).each(function(state){
+
+                d3.select(this).on("mouseover", function(d){
+                    tooltip.selectAll("p").remove();
+                    tooltip.style("visibility", "visible")
+                        .append("p").text(this.id);
+                    tooltip.append("p").text("Total Bills: " + data[stateAbbr[state.properties.name]].totalBills);
+                    })
+                    .on("mousemove", function(){return d3.select("#tooltip").style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+                    .on("mouseout", function(){return d3.select("#tooltip").style("visibility", "hidden");})
+                    .on("mousedown", function(){displayBills(stateAbbr[state.properties.name], topic)});
             });
-            
-            // Tool tip
-            d3.select(state)
-            .on("mouseover", function(){
-
-                d3.select("#tooltip").selectAll("p").remove();
-
-                d3.select("#tooltip")
-                    .style("visibility", "visible")
-                    .append("p").text(stateName);
-
-                 d3.select("#tooltip")
-                    .append("p").text("Total Bills: " + numBills);
-                })
-            .on("mousemove", function(){return d3.select("#tooltip").style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
-            .on("mouseout", function(){return d3.select("#tooltip").style("visibility", "hidden");})
-            .on("mousedown", function(){displayBills(state.id, topic)})
-            ;
-        });
-
     });
 
 };
+
 
 
 // Displays the most recent bills on the subject (10 max)
@@ -104,30 +85,18 @@ function displayBills(stateID, topic){
     //clears bills if there are any.
     d3.select("#bills").selectAll("p").remove()
     d3.select("#bills").selectAll("h3").remove();
+    
+    // Most recent bills
+    var recent_bills = data[stateID].most_recent_bills;
 
-    data.forEach(function(json){
-        if(json.state === stateID){
-            // If no bills in that subject found
-            if(json.topBills.length == 0){
-                d3.select("#bills")
-                    .append("h3")
-                    .text("There are no bills on " + topic);
-            }else{
-                // Displaying the bills
-                d3.select("#bills")
-                    .append("h3")
-                    .text(json.topBills.length + " recent bills found on " + topic);
-                
-                
-                json.topBills.forEach(function(bill){
-                    //Number of Bills
-                    d3.select("#bills")
-                        .append("p")
-                        .text(bill.bill_id);
-
-                    //console.log(bill.bill_id);
-                });
-            }
-        }
+    d3.select('#bills').append("h3")
+        .text(recent_bills.length > 0 ? recent_bills.length + " recent bills found on " + topic : "There are no recent bills found on " + topic);
+   
+    recent_bills.forEach(function(bill){
+        d3.select("#bills").append("p")
+            .text(bill.bill_id)
+            .on("mouseover", function(){d3.select(this).text(bill.bill_id + ' - ' + bill.title);})
+            .on("mouseout", function(){d3.select(this).text(bill.bill_id)})
     });
+    
 }

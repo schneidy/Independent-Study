@@ -21,6 +21,9 @@ states = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DC", "DE", "FL", "GA",
           "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", 
           "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "PR"]
 
+# Grabbinga all bills from every topic and state
+# and saves them to their own file.
+# File name is StateAbbr-Topic.json
 for topic in topics:
     for state_abbr in states:
         bills = openstates.bills(
@@ -31,3 +34,5 @@ for topic in topics:
         f = open('../json/' + state_abbr + '-' + topic.replace(',', '').replace(' ', '') + '.json', 'w')
         f.write(bills_json)
         f.close()
+
+
