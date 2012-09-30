@@ -52,3 +52,42 @@ header h1{
 #tooltip p{
     margin: 5px 0 2px 4px;
 }
+
+#sideBar{
+    display: block;
+    float: left;
+    width: 400px;
+}
+
+#bills ul{
+    display: block;
+    list-style-type:none;
+    margin:0;
+    padding:0;
+}
+
+#bills li{
+    display: block;
+    height: 50px;
+    margin: 5px 0px;
+    padding; 5px 0;
+    width: 380px; 
+}
+
+#bills li p:hover{
+    margin-bottom: 10px;
+}
+
+#bills li a{
+    float: left;
+    margin: 0px;
+    padding: 0px;
+    text-decoration: none;
+}
+
+#bills li p{
+    float: left;
+    margin: 0 0 0 3px;
+    padding: 0px;
+    width: 300px;
+}
