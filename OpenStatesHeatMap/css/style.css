@@ -2,6 +2,12 @@ body{
 	background-color: #FFF;
 }
 
+#holder{
+    display: block;
+    height: 750px;
+    margin-bottom: 20px;
+}
+
 header{
 	height: 86px;
 	width: 800px;
