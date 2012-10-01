@@ -11,12 +11,18 @@ body{
 header{
 	height: 86px;
 	width: 800px;
-	margin: 0 auto;
+	margin: 10px auto;
 }
 
 header h1{
 	font-size: 40px;
-	text-align: center;
+	height: 20px; 
+    text-align: center;
+}
+
+header p{
+    padding: 10px 0;
+    text-align: center;
 }
 
 #about{
