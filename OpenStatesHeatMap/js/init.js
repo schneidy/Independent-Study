@@ -47,7 +47,7 @@ function overallInit(){
     rangeBar = svg.append('svg:rect')
         .attr('id', 'rangeOfBills')
         .attr('x',  400)
-        .attr('y', 17)
+        .attr('y', 500)
         .attr('width', 200)
         .attr('height', 25)
         .style('fill', 'white');
@@ -74,11 +74,11 @@ function overallInit(){
     svg.append("svg:text")
         .attr("id", "rangeMin")
         .attr("x", 400)
-        .attr("y", 15);
+        .attr("y", 495);
     svg.append("svg:text")
         .attr("id", "rangeMax")
         .attr("x", 580)
-        .attr("y", 15);
+        .attr("y", 495);
 
 
 };
