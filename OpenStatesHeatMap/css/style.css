@@ -3,14 +3,27 @@ body{
 }
 
 header{
-	height: 100px;
+	height: 86px;
 	width: 800px;
-	margin: 0 auto 0 auto;
+	margin: 0 auto;
 }
 
 header h1{
 	font-size: 40px;
 	text-align: center;
+}
+
+#about{
+    display: block;
+    margin: 0 auto;
+    height: 100px;
+    width: 800px;
+}
+
+#about p{
+    float: left;
+    margin: 0 35px 0 0;
+    width: 355px;
 }
 
 #viz{
