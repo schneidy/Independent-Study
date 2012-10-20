@@ -41,8 +41,10 @@ function overallInit(){
         .on("click", click);
 
     // Side Bar for tweet information
-    var sideBar = d3.select("#viz").append("div");
-    sideBar.attr("id", "sideBar");
+    var sideBar = d3.select("#viz").append("div")
+        .attr("id", "sideBar")
+        .append("h2")
+        .attr("id", "sideBarTitle");
     twitterTables();
 
     // Preping for states
@@ -102,12 +104,19 @@ function overallInit(){
 };
 
 
+// Twitter Totals
 function twitterTables(){
- // Adding Twitter Searches
+    
+    // Sets heading
+    d3.select("#sideBarTitle")
+        .text("Total Tweets");
+    
+    
+    // Shows Tweets
     d3.json("http://localhost/php/lib.php?tableNames", function(json){
         d3.select("#sideBar")
             .selectAll("p")
-            .data(json.tweets)
+                .data(json.tweets)
             .enter()
             .append("div")
             .attr("class", "twitTopics")
