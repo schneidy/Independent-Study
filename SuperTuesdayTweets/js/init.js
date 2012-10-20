@@ -14,38 +14,54 @@ $(document).ready(function(){
 // Loading of overall viz
 function overallInit(){
 
-    //Initial State map code from the D3 library "symbol-map" example.
-    // The radius scale for the centroids.
-    //var r = d3.scale.sqrt()
-    //.domain([0, 1e6])
-    //.range([0, 10]);
+    var width = 960,
+        height = 500,
+        centered;
+
+    // SVG container
+    var svg = d3.select("#viz").append("svg")
+        .attr("id", "mainSVG")
+        .attr("width", width)
+        .attr("height", height);
 
     // Our projection.
-    var xy = d3.geo.albersUsa();
+    var projection = d3.geo.albersUsa()
+        .scale(width)
+        .translate([0, 0]);
 
-    // Main SVG container
-    var svg = d3.select("#viz").append("svg");
-    svg.attr("id", "mainSVG");
-    svg.append("g").attr("id", "states");
+    var path = d3.geo.path()
+        .projection(projection);
+  
     
+    //Background
+    var background = svg.append("rect")
+        .attr("class", "background")
+        .attr("width", width)
+        .attr("height", height)
+        .on("click", click);
+
     // Side Bar for tweet information
     var tweetBar = d3.select("#viz").append("div");
     tweetBar.attr("id", "tweetSearches");
 
+    // Preping for states
+    var g = svg.append("g")
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+        .append("g")
+        .attr("id", "states");
+
     // Adding States
     d3.json("../json/us-states.json", function(collection) {
-          svg.select("#states")
-            .selectAll("path")
-            .data(collection.features)
-            .enter().append("path")
-            .attr("d", d3.geo.path().projection(xy))
-            .attr("id", function(q) {return q.properties.name.split(' ').join('');})
-            .attr("onclick", function(q) {return "stateInit(this)";})
-            .style("fill", function(q) {
-                if(window.primaryStates.indexOf(q.properties.name) != -1){
-                    return "red";
-                }
-            });
+            g.selectAll("path")
+                .data(collection.features)
+                    .enter().append("path")
+                .attr("d", d3.geo.path().projection(projection))
+                .attr("id", function(q) {return q.properties.name.split(' ').join('');})
+                .style("fill", function(q) {
+                    if(window.primaryStates.indexOf(q.properties.name) != -1){
+                        return "red";
+                    }})
+                .on("click", click);
     });
 
     
@@ -70,20 +86,33 @@ function overallInit(){
             ;
     });
 
-    // Exmaple code
-    /*d3.json("../json/us-state-centroids.json", function(collection) {
-        svg.select("#state-centroids")
-            .selectAll("circle")
-            .data(collection.features
-            .sort(function(a, b) { return b.properties.population - a.properties.population; }))
-            .enter().append("circle")
-            .attr("transform", function(d) { return "translate(" + xy(d.geometry.coordinates) + ")"; })
-            .attr("r", 0)
-            .transition()
-                .duration(1000)
-                .delay(function(d, i) { return i * 50; })
-                .attr("r", function(d) { return r(d.properties.population); });
-    });*/
+
+    function click(d){
+        var x = 0,
+        y = 0,
+        k = 1;
+
+        if (d && centered !== d) {
+            var centroid = path.centroid(d);
+            x = -centroid[0];
+            y = -centroid[1];
+            k = 4;
+            centered = d;
+        } else {
+            centered = null;
+        }
+
+        g.selectAll("path")
+            .classed("active", centered && function(d) { return d === centered; });
+
+        g.transition()
+            .duration(1000)
+            .attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")")
+            .style("stroke-width", 1.5 / k + "px");
+    }
+
+
+
 };
 
 
