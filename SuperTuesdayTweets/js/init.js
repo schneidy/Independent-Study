@@ -41,8 +41,9 @@ function overallInit(){
         .on("click", click);
 
     // Side Bar for tweet information
-    var tweetBar = d3.select("#viz").append("div");
-    tweetBar.attr("id", "tweetSearches");
+    var sideBar = d3.select("#viz").append("div");
+    sideBar.attr("id", "sideBar");
+    twitterTables();
 
     // Preping for states
     var g = svg.append("g")
@@ -64,11 +65,47 @@ function overallInit(){
                 .on("click", click);
     });
 
-    
 
-    // Adding Twitter Searches
+    //Clicking on a state
+    function click(d){
+        var x = 0,
+        y = 0,
+        k = 1;
+
+        if (d && centered !== d) {
+            svg.transition()
+                .duration(1000)
+                .style("width", "500");
+            var centroid = path.centroid(d);
+            x = -centroid[0];
+            y = -centroid[1];
+            k = 4;
+            centered = d;
+        } else {
+            centered = null;
+            svg.transition()
+                .duration(1000)
+                .style("width", "900");
+        }
+
+        g.selectAll("path")
+            .classed("active", centered && function(d) { return d === centered; });
+
+        g.transition()
+            .duration(1000)
+            .attr("transform", "scale(" + k + ")translate(" + (x-50) + "," + y + ")")
+            .style("stroke-width", 1.5 / k + "px");
+    }
+
+
+
+};
+
+
+function twitterTables(){
+ // Adding Twitter Searches
     d3.json("http://localhost/php/lib.php?tableNames", function(json){
-        d3.select("#tweetSearches")
+        d3.select("#sideBar")
             .selectAll("p")
             .data(json.tweets)
             .enter()
@@ -86,35 +123,7 @@ function overallInit(){
             ;
     });
 
-
-    function click(d){
-        var x = 0,
-        y = 0,
-        k = 1;
-
-        if (d && centered !== d) {
-            var centroid = path.centroid(d);
-            x = -centroid[0];
-            y = -centroid[1];
-            k = 4;
-            centered = d;
-        } else {
-            centered = null;
-        }
-
-        g.selectAll("path")
-            .classed("active", centered && function(d) { return d === centered; });
-
-        g.transition()
-            .duration(1000)
-            .attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")")
-            .style("stroke-width", 1.5 / k + "px");
-    }
-
-
-
-};
-
+}
 
 // returns the number of tweets
 function numTweets(topic){
