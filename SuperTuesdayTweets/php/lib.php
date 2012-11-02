@@ -1,6 +1,8 @@
 <?php
 include ("../../settings.php");
 
+$topics = array("allTweets", "SuperTuesday", "Obama", "Romney", "Santorum", "Gingrich", "Santorum");
+
 /* Basic Tweet Query
 Arguments:
 	topic = one of the twitter search terms.
@@ -514,27 +516,43 @@ if(isset($_GET['tableNames'])) {
 	/* grab the vars from $_GET */
 	$number_of_tweets = isset($_GET['num']) ? intval($_GET['num']) : 10; //10 is the default
 	$skip = isset($_GET['skip']) ? intval($_GET['skip']) : 0; // 0 is the default
-	$topic = $_GET['topic']; //no default
+    $tableNames = $_GET['tableNames'];
 
 	/* connect to the db */
 	$link = mysql_connect($server,$user,$pwd) or die('Cannot connect to the DB');
 	mysql_select_db($db,$link) or die('Cannot select the DB');
+    $result;
 
 	/* grab the posts from the db */
-	$query = "show tables";
-    $result = mysql_query($query,$link) or die('Errant query:  '.$query);
+    // search here
+    if($tableNames == null){
+        $query = "show tables";
+        $sql_result = mysql_query($query,$link) or die('Errant query:  '.$query);
+        
+        /* create one master array of the records */
+	    $result = array();
+        if(mysql_num_rows($sql_result)) {
+		    while($tweet = mysql_fetch_assoc($sql_result)) {
+			    $result[] = array('tableNames'=>$tweet);
+		    }
+	    }
 
-	/* create one master array of the records */
-	$tweets = array();
-	if(mysql_num_rows($result)) {
-		while($tweet = mysql_fetch_assoc($result)) {
-			$tweets[] = array('tweet'=>$tweet);
-		}
-	}
+	    /* output in json */
+        header('Content-type: application/json');
+        echo json_encode(array('result'=>$result));
 
-	/* output in json */
-    header('Content-type: application/json');
-	echo json_encode(array('tweets'=>$tweets));
+    }else{
+        header('Content-type: application/json');
+        $output = array();
+        foreach($topics as &$topic){
+            $query = "SELECT count(*) as numTweets FROM $topic where text like '%$tableNames%'";
+            $sql_result = mysql_query($query,$link) or die('Errant query:  '.$query);
+            $result = mysql_fetch_assoc($sql_result);
+            $topic_array = array($topic => $result);
+            array_push($output, $topic_array);
+        }
+        echo json_encode(array('result' => $output));
+    }
 
 	/* disconnect from the db */
 	@mysql_close($link);
