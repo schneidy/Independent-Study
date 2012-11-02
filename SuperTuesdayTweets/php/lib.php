@@ -525,34 +525,20 @@ if(isset($_GET['tableNames'])) {
 
 	/* grab the posts from the db */
     // search here
-    if($tableNames == null){
-        $query = "show tables";
-        $sql_result = mysql_query($query,$link) or die('Errant query:  '.$query);
-        
-        /* create one master array of the records */
-	    $result = array();
-        if(mysql_num_rows($sql_result)) {
-		    while($tweet = mysql_fetch_assoc($sql_result)) {
-			    $result[] = array('tableNames'=>$tweet);
-		    }
-	    }
-
-	    /* output in json */
-        header('Content-type: application/json');
-        echo json_encode(array('result'=>$result));
-
-    }else{
-        header('Content-type: application/json');
-        $output = array();
-        foreach($topics as &$topic){
+    header('Content-type: application/json');
+    $output = array();
+    foreach($topics as &$topic){
+        if($tableNames == "all"){
+            $query = "SELECT count(*) as numTweets from $topic";
+        }else{
             $query = "SELECT count(*) as numTweets FROM $topic where text like '%$tableNames%'";
-            $sql_result = mysql_query($query,$link) or die('Errant query:  '.$query);
-            $result = mysql_fetch_assoc($sql_result);
-            $topic_array = array($topic => $result);
-            array_push($output, $topic_array);
         }
-        echo json_encode(array('result' => $output));
+        $sql_result = mysql_query($query,$link) or die('Errant query:  '.$query);
+        $result = mysql_fetch_assoc($sql_result);
+        $topic_array = array('tableName' => $topic, 'numTweets' => $result['numTweets']);
+        $output[] = $topic_array;
     }
+    echo json_encode(array('result' => $output));
 
 	/* disconnect from the db */
 	@mysql_close($link);

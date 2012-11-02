@@ -116,20 +116,17 @@ function twitterTables(){
     d3.json("http://localhost/php/lib.php?tableNames", function(json){
         d3.select("#sideBar")
             .selectAll("p")
-                .data(json.tweets)
+                .data(json.result)
             .enter()
             .append("div")
             .attr("class", "twitTopics")
-            .attr("id", function(d){return d.tweet.Tables_in_superTueTweets;})
+            .attr("id", function(d){return d.tableName;})
             .append("p")
             .text(function(d){
-                var tweetSubjects = d.tweet.Tables_in_superTueTweets.replace( /([a-z])([A-Z])/, "$1 $2");
-                return tweetSubjects;
-            });
-            //test code below
-            
-            d3.selectAll(".twitTopics")[0].forEach(function (f){numTweets(f)})
-            ;
+                var tweetSubjects = d.tableName.replace( /([a-z])([A-Z])/, "$1 $2");
+                return tweetSubjects;})
+            .append("p")
+            .text(function(d){return d.numTweets});
     });
 
 }
