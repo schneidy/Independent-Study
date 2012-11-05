@@ -4,7 +4,7 @@ var primaryStates = ["Alaska", "Georgia", "Idaho", "Massachusetts",
 
 var twitterSearches = ["All Tweets", "Super Tuesday", "Obama", "Romney",
     "Santorum", "Gingrich", "Santorum"];
-
+var json;
 // Inital loading
 $(document).ready(function(){
     overallInit();
@@ -38,14 +38,13 @@ function overallInit(){
         .attr("class", "background")
         .attr("width", width)
         .attr("height", height)
-        .on("click", click);
+        .on("click", focusOnState);
 
     // Side Bar for tweet information
-    var sideBar = d3.select("#viz").append("div")
+    var sideBar = d3.select("#viz").append("svg")
         .attr("id", "sideBar")
-        .append("h2")
-        .attr("id", "sideBarTitle");
-    twitterTables();
+        .attr("width", 370)
+        .attr("height", height);
 
     // Preping for states
     var g = svg.append("g")
@@ -64,12 +63,12 @@ function overallInit(){
                     if(window.primaryStates.indexOf(q.properties.name) != -1){
                         return "red";
                     }})
-                .on("click", click);
+                .on("click", focusOnState);
     });
 
 
     //Clicking on a state
-    function click(d){
+    function focusOnState(d){
         var x = 0,
         y = 0,
         k = 1;
@@ -100,6 +99,8 @@ function overallInit(){
     }
 
 
+    //Setting up the bar chart
+    initialBarChart("all");
 
 };
 
@@ -131,12 +132,65 @@ function twitterTables(){
 
 }
 
-// returns the number of tweets
-function numTweets(topic){
-    var url ="http://localhost/php/lib.php?topic="+topic.id.toString()+"&count";
-    d3.json(url, function(json){
-        var num = json.tweets[0].tweet.numTweets;
-        d3.select(topic).append("p").text(num);
-    });
-}
+// Bar Chart for comparing total tweets between search terms
+function initialBarChart(topic){
+    var url = "http://localhost/php/lib.php?tableNames=" + topic;
+    d3.json(url, function(data){
+        
+        var chart = d3.select("#sideBar");
+        var x = d3.scale.linear()
+            .domain([0, d3.max(data.result.map(function(d) { return parseInt(d.numTweets);}))])
+            .range([0, 200]);
+        var y = d3.scale.ordinal()
+            .domain(d3.range(data.result.map(function(d) { return d.tableName;}).length))
+            .rangeBands([0, 150]);
+        
+        var title = chart.append("text")
+            .attr("x", 75)
+            .attr("y", 15)
+            .attr("fill", "black")
+            .attr("font-size", 18)
+            .attr("stroke", "none")
+            .attr("id", "barChartTitle")
+            .text("Total Number of Tweets By Topic:");
 
+        // Bars on the chart
+        var bars = chart.append("g")
+            .attr("transform", "translate(100, 35)")
+            .attr("id", "bars");
+        bars.selectAll("rect")
+            .data(data.result)
+        .enter().append("rect")
+            .attr("y", function(d, i){var ret = y(i); return ret + 10;})
+            .attr("width", function(d){return x(d.numTweets)})
+            .attr("height", 20);
+
+        // Total number of tweets for each search term
+        bars.selectAll("text")
+            .data(data.result)
+        .enter().append("text")
+            .attr("x", function(d){return x(d.numTweets) + 10})
+            .attr("y", function(d, i){var ret = y(i); return ret + 20;})
+            .attr("dx", 3)
+            .attr("dy", ".35em")
+            .attr("text-anchor", "start")
+            .attr("fill", "black")
+            .attr("stroke", "none")
+            .text(function(d){return d.numTweets})
+
+        // Tweet Search
+        var searchTerms = chart.append("g")
+            .attr("transform", "translate(90, 45)")
+            .attr("id", "searchLabels");
+        searchTerms.selectAll("text")
+            .data(data.result)
+        .enter().append("text")
+            .attr("y", function(d, i){var ret = y(i); return ret + 10;})
+            .attr("stroke", "none")
+            .attr("fill", "black")
+            .attr("dy", ".35em")
+            .attr("text-anchor", "end")
+            .text(function(d){return d.tableName})
+    });
+
+}

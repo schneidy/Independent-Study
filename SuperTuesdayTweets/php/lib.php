@@ -1,7 +1,7 @@
 <?php
 include ("../../settings.php");
 
-$topics = array("allTweets", "SuperTuesday", "Obama", "Romney", "Santorum", "Gingrich", "Santorum");
+$topics = array("SuperTuesday", "Obama", "Romney", "Santorum", "Gingrich", "Santorum");
 
 /* Basic Tweet Query
 Arguments:

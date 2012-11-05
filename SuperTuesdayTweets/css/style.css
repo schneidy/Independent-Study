@@ -34,7 +34,7 @@ nav li:hover{
 #viz{
     height: 600px;
     margin: 35px auto 0 auto;
-    width: 1250px;
+    width: 1300px;
 }
 
 #mainSVG{
@@ -48,8 +48,8 @@ nav li:hover{
 #sideBar{
     float: left;
     margin-top: 50px;
-    margin-left: 60px;
-    width: 250px;
+    margin-left: 10px;
+    width: 370px;
 }
 
 
@@ -63,13 +63,7 @@ nav li:hover{
     stroke-width: 1.5px;
 }
 
-.twitTopics{
-	-moz-column-count: 2;
-    -moz-column-gap: px;
-    -webkit-column-count: 2;
-    -webkit-column-gap: px;
-    column-count: 2;
-	column-gap: px;
+#sideBar rect {
+    stroke: white;
+    fill: steelblue;
 }
-
-
