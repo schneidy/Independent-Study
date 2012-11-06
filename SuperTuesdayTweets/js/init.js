@@ -163,7 +163,8 @@ function initialBarChart(topic){
         .enter().append("rect")
             .attr("y", function(d, i){var ret = y(i); return ret + 10;})
             .attr("width", function(d){return x(d.numTweets)})
-            .attr("height", 20);
+            .attr("height", 20)
+            .attr('totalTweets', function(d){return d.numTweets});
 
         // Total number of tweets for each search term
         bars.selectAll("text")
@@ -192,5 +193,37 @@ function initialBarChart(topic){
             .attr("text-anchor", "end")
             .text(function(d){return d.tableName})
     });
+}
 
+// Updates the total tweets bar chart
+function updateBarChart(topic){
+    
+    //Grabs the new data
+    var url = "http://localhost/php/lib.php?tableNames=" + topic;
+    d3.json(url, function(data){
+        var chart = d3.select("#bars");
+        var x = d3.scale.linear()
+            .domain([0, d3.max(data.result.map(function(d) { return parseInt(d.numTweets);}))])
+            .range([0, 200]);
+ 
+
+        // reload data
+        var bars = chart.selectAll('rect')
+            .data(data.result);
+
+        // tranforms bars into new data
+        bars.attr("class", "update")
+            .transition()
+            .duration(750)
+            .attr("width", function(d){return x(d.numTweets) + 10})
+            .attr('totalTweets', function(d){return d.numTweets});;
+
+       // reloads total tweets label
+       chart.selectAll('text')
+           .data(data.result)
+           .text(function(d){return d.numTweets})
+           .transition()
+           .duration(750)
+           .attr("x", function(d){return x(d.numTweets) + 10}); 
+    });
 }
