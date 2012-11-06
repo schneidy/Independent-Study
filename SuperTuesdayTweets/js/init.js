@@ -82,11 +82,15 @@ function overallInit(){
             y = -centroid[1];
             k = 4;
             centered = d;
+
+            //Updates the bar chart with total of tweets containing the state name within the tweet
+            updateBarChart(d.properties.name);
         } else {
             centered = null;
             svg.transition()
                 .duration(1000)
                 .style("width", "900");
+            updateBarChart("all");
         }
 
         g.selectAll("path")
@@ -146,17 +150,27 @@ function initialBarChart(topic){
             .rangeBands([0, 150]);
         
         var title = chart.append("text")
-            .attr("x", 75)
-            .attr("y", 15)
+            .attr("x", 10)
+            .attr("y", 25)
             .attr("fill", "black")
-            .attr("font-size", 18)
+            .attr("font-size", 24)
             .attr("stroke", "none")
             .attr("id", "barChartTitle")
             .text("Total Number of Tweets By Topic:");
 
+        var subTitle = chart.append("text")
+            .attr("x", 140)
+            .attr("y", 55)
+            .attr("fill", "black")
+            .attr("font-size", 18)
+            .attr("stroke", "none")
+            .attr("id", "tweetTopic")
+            .text("All Tweets");
+
+
         // Bars on the chart
         var bars = chart.append("g")
-            .attr("transform", "translate(100, 35)")
+            .attr("transform", "translate(100, 65)")
             .attr("id", "bars");
         bars.selectAll("rect")
             .data(data.result)
@@ -181,7 +195,7 @@ function initialBarChart(topic){
 
         // Tweet Search
         var searchTerms = chart.append("g")
-            .attr("transform", "translate(90, 45)")
+            .attr("transform", "translate(90, 75)")
             .attr("id", "searchLabels");
         searchTerms.selectAll("text")
             .data(data.result)
@@ -218,12 +232,15 @@ function updateBarChart(topic){
             .attr("width", function(d){return x(d.numTweets) + 10})
             .attr('totalTweets', function(d){return d.numTweets});;
 
-       // reloads total tweets label
-       chart.selectAll('text')
-           .data(data.result)
-           .text(function(d){return d.numTweets})
-           .transition()
-           .duration(750)
-           .attr("x", function(d){return x(d.numTweets) + 10}); 
+        // reloads total tweets label
+        chart.selectAll('text')
+            .data(data.result)
+            .text(function(d){return d.numTweets})
+            .transition()
+            .duration(750)
+            .attr("x", function(d){return x(d.numTweets) + 10});
+
+        // changes the tweet topic
+        d3.select("#tweetTopic").text(function(){return topic == "all" ? "All Tweets" : topic});
     });
 }
