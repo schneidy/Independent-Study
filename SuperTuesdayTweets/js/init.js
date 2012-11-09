@@ -53,7 +53,7 @@ function overallInit(){
         .attr("id", "states");
 
     // Adding States
-    d3.json("../json/us-states.json", function(collection) {
+    d3.json("./json/us-states.json", function(collection) {
             g.selectAll("path")
                 .data(collection.features)
                     .enter().append("path")
@@ -118,7 +118,7 @@ function twitterTables(){
     
     
     // Shows Tweets
-    d3.json("http://localhost/php/lib.php?tableNames", function(json){
+    d3.json("./php/lib.php?tableNames", function(json){
         d3.select("#svgSideBar")
             .selectAll("p")
                 .data(json.result)
@@ -138,7 +138,7 @@ function twitterTables(){
 
 // Bar Chart for comparing total tweets between search terms
 function initialBarChart(topic){
-    var url = "http://localhost/php/lib.php?tableNames=" + topic;
+    var url = "./php/lib.php?tableNames=" + topic;
     d3.json(url, function(data){
         
         var chart = d3.select("#svgSideBar");
@@ -213,7 +213,7 @@ function initialBarChart(topic){
 function updateBarChart(topic){
     
     //Grabs the new data
-    var url = "http://localhost/php/lib.php?tableNames=" + topic;
+    var url = "./php/lib.php?tableNames=" + topic;
     d3.json(url, function(data){
         var chart = d3.select("#bars");
         var x = d3.scale.linear()
