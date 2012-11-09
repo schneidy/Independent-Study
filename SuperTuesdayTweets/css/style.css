@@ -31,7 +31,7 @@ nav li:hover{
 	border-bottom: 4px solid #252525; 
 }
 
-#viz{
+#holder{
     height: 600px;
     margin: 35px auto 0 auto;
     width: 1300px;
@@ -63,7 +63,7 @@ nav li:hover{
     stroke-width: 1.5px;
 }
 
-#sideBar rect {
+#svgSideBar rect {
     stroke: white;
-    fill: steelblue;
+    fill: saddlebrown;
 }

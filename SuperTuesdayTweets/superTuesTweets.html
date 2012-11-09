@@ -12,7 +12,17 @@
 <header>
 	<h1>Super Tuesday Tweets Visualized</h1>
 </header>
-<div id="viz">
+<div id="holder">
+    <div id="viz">
+    </div>
+    <div id="sideBar">
+        <div id="topicSearchHolder">
+            <p>Enter a topic or click on a state to see the total number of tweets that relate to the search terms below.</p>
+                <input name="topic" id="topic" type="text"/>
+                <button type="submit" onclick="updateBarChart(topic.value)">Submit</button>
+                <button type="reset"  onclick="updateBarChart('all')">Reset</button>
+        </div>
+    </div>
 </div>
 </body>
 </html>

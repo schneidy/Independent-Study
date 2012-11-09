@@ -41,8 +41,8 @@ function overallInit(){
         .on("click", focusOnState);
 
     // Side Bar for tweet information
-    var sideBar = d3.select("#viz").append("svg")
-        .attr("id", "sideBar")
+    var svgSideBar = d3.select("#sideBar").append("svg")
+        .attr("id", "svgSideBar")
         .attr("width", 370)
         .attr("height", height);
 
@@ -119,7 +119,7 @@ function twitterTables(){
     
     // Shows Tweets
     d3.json("http://localhost/php/lib.php?tableNames", function(json){
-        d3.select("#sideBar")
+        d3.select("#svgSideBar")
             .selectAll("p")
                 .data(json.result)
             .enter()
@@ -141,7 +141,7 @@ function initialBarChart(topic){
     var url = "http://localhost/php/lib.php?tableNames=" + topic;
     d3.json(url, function(data){
         
-        var chart = d3.select("#sideBar");
+        var chart = d3.select("#svgSideBar");
         var x = d3.scale.linear()
             .domain([0, d3.max(data.result.map(function(d) { return parseInt(d.numTweets);}))])
             .range([0, 200]);
