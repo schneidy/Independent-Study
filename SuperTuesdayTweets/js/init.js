@@ -5,6 +5,7 @@ var primaryStates = ["Alaska", "Georgia", "Idaho", "Massachusetts",
 var twitterSearches = ["All Tweets", "Super Tuesday", "Obama", "Romney",
     "Santorum", "Gingrich", "Santorum"];
 var json;
+var selectedBar;
 // Inital loading
 $(document).ready(function(){
     overallInit();
@@ -244,10 +245,6 @@ function updateBarChart(topic){
         d3.select("#tweetTopic").text(function(){return topic == "all" ? "All Tweets" : topic});
     });
 
-    // Clears selection
-    d3.selectAll(".selected")
-        .style("stroke", "none")
-        .attr("class", "");
     // Shows new default tweets
     dispTweetsUpdate(null, topic)
 
@@ -267,9 +264,9 @@ function dispTweetsInitial(){
 }
 
 function dispTweetsUpdate(bar, topic){
-    
     var tweetHolder = d3.select("#tweetContainer");
-    if(bar != null){
+    if(bar != null && bar != selectedBar){
+        selectedBar = bar;
         var searchTerm = d3.select(bar).attr("tweetSearch");
         var url = './php/lib.php?topic='+searchTerm;
         url += topic != 'all' ? '&contains='+topic : '';
@@ -289,6 +286,10 @@ function dispTweetsUpdate(bar, topic){
             .style("stroke", "purple")
             .style("stroke-width", "3px");
     }else{
+        selectedBar = null;
+        d3.selectAll(".selected")
+            .style("stroke", "none")
+            .attr("class", "");
         var url = './php/lib.php?topic=allTweets&contains='+topic;
         d3.json(url, function(json){
             var tweets = tweetHolder.selectAll('p')
