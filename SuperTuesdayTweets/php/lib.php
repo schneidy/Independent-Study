@@ -758,7 +758,11 @@ if(isset($_GET['timeline']) && isset($_GET['contains'])){
         for($i = -1800; $i < 90000; $i += 1800){ //start looking before midnight, for a day and an hour, every half hour
             $startTime = date("Y-m-d H:i:s",$time + $i);
             $endTime = date("Y-m-d H:i:s", ($time + $i + 1800));
-            $query = "SELECT count(*) as numTweets FROM $topic where text like '%$tableNames%' and created_at between '$startTime' and '$endTime'";
+            if($contains == 'all'){
+                $query = "SELECT count(*) as numTweets FROM $topic where created_at between '$startTime' and '$endTime'";
+            }else{
+                 $query = "SELECT count(*) as numTweets FROM $topic where text like '%$tableNames%' and created_at between '$startTime' and '$endTime'";
+            }
             $sql_result = mysql_query($query,$link) or die('Errant query:  '.$query);
             $result = mysql_fetch_assoc($sql_result);
             $timePoint = array($endTime => $result['numTweets']);
