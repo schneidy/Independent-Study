@@ -18,9 +18,11 @@
     <div id="sideBar">
         <div id="topicSearchHolder">
             <p>Enter a topic or click on a state to see the total number of tweets that relate to the search terms below.</p>
-                <input name="topic" id="topic" type="text"/>
-                <button type="submit" onclick="updateBarChart(topic.value)">Submit</button>
-                <button type="reset"  onclick="updateBarChart('all')">Reset</button>
+                <form id="twitterForm" action="javascript:void(0);">
+                    <input name="topic" id="topic" type="text"/>
+                    <button type="submit" id="submit">Submit</button>
+                    <button type="reset"  id="reset">Reset</button>
+                </form>
         </div>
     </div>
     <div id="tweetContainer">

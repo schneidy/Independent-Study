@@ -98,6 +98,13 @@ function overallInit(){
     }
 
 
+    //Setting up the submit button
+    $('#twitterForm').submit(function(){
+        d3.select("#states").transition().duration(1500).attr('transform', 'scale(1,1)');        
+        var tweetTopic = this.topic.value;
+        updateBarChart(tweetTopic);
+    });
+
     //Setting up the bar chart
     initialBarChart("all");
 
