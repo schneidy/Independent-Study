@@ -243,7 +243,7 @@ function updateBarChart(topic){
 
 function dispTweets(bar, topic){
     var searchTerm = bar.tableName;
-    var url = 'http://localhost/php/lib.php?topic='+searchTerm;
+    var url = './php/lib.php?topic='+searchTerm;
     url += topic != 'all' ? '&contains='+topic : '';
     var tweetHolder = d3.select("#tweetContainer");;
 
