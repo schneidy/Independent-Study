@@ -40,14 +40,11 @@ nav li:hover{
 #mainSVG{
     display: block;
     float: left;
-    height: 500px;
-    margin-top: 50px;
-    width: 900px;
+    height: 400px;
 }
 
 #sideBar{
     float: left;
-    margin-top: 50px;
     margin-left: 10px;
     width: 370px;
 }
@@ -66,4 +63,11 @@ nav li:hover{
 #svgSideBar rect {
     stroke: white;
     fill: saddlebrown;
+}
+
+#tweetContainer {
+    display: block;
+    float: left;
+    margin-left: 10px;
+    width: 300px;
 }

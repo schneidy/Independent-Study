@@ -14,8 +14,8 @@ $(document).ready(function(){
 // Loading of overall viz
 function overallInit(){
 
-    var width = 960,
-        height = 500,
+    var width = 580,
+        height = 400,
         centered;
 
     // SVG container
@@ -44,7 +44,7 @@ function overallInit(){
     var svgSideBar = d3.select("#sideBar").append("svg")
         .attr("id", "svgSideBar")
         .attr("width", 370)
-        .attr("height", height);
+        .attr("height", 225);
 
     // Preping for states
     var g = svg.append("g")
@@ -74,9 +74,6 @@ function overallInit(){
         k = 1;
 
         if (d && centered !== d) {
-            svg.transition()
-                .duration(1000)
-                .style("width", "500");
             var centroid = path.centroid(d);
             x = -centroid[0];
             y = -centroid[1];
@@ -87,9 +84,6 @@ function overallInit(){
             updateBarChart(d.properties.name);
         } else {
             centered = null;
-            svg.transition()
-                .duration(1000)
-                .style("width", "900");
             updateBarChart("all");
         }
 
@@ -98,7 +92,7 @@ function overallInit(){
 
         g.transition()
             .duration(1000)
-            .attr("transform", "scale(" + k + ")translate(" + (x-50) + "," + y + ")")
+            .attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")")
             .style("stroke-width", 1.5 / k + "px");
     }
 
@@ -178,7 +172,8 @@ function initialBarChart(topic){
             .attr("y", function(d, i){var ret = y(i); return ret + 10;})
             .attr("width", function(d){return x(d.numTweets)})
             .attr("height", 20)
-            .attr('totalTweets', function(d){return d.numTweets});
+            .attr("totalTweets", function(d){return d.numTweets})
+            .on("click", function(d){dispTweets(d, topic);});
 
         // Total number of tweets for each search term
         bars.selectAll("text")
@@ -223,14 +218,15 @@ function updateBarChart(topic){
 
         // reload data
         var bars = chart.selectAll('rect')
-            .data(data.result);
+            .data(data.result)
+            .on("click", function(d){dispTweets(d, topic);});
 
         // tranforms bars into new data
         bars.attr("class", "update")
             .transition()
             .duration(750)
             .attr("width", function(d){return x(d.numTweets) + 10})
-            .attr('totalTweets', function(d){return d.numTweets});;
+            .attr('totalTweets', function(d){return d.numTweets});
 
         // reloads total tweets label
         chart.selectAll('text')
@@ -243,4 +239,20 @@ function updateBarChart(topic){
         // changes the tweet topic
         d3.select("#tweetTopic").text(function(){return topic == "all" ? "All Tweets" : topic});
     });
+}
+
+function dispTweets(bar, topic){
+    var searchTerm = bar.tableName;
+    var url = 'http://localhost/php/lib.php?topic='+searchTerm;
+    url += topic != 'all' ? '&contains='+topic : '';
+    var tweetHolder = d3.select("#tweetContainer");;
+
+
+    d3.json(url, function(json){
+        var tweets = tweetHolder.selectAll('p')
+            .data(json.tweets)
+        .enter().append('p')
+            .text(function(d){return d.tweet.text});
+    });
+
 }
