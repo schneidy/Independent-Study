@@ -761,7 +761,7 @@ if(isset($_GET['timeline']) && isset($_GET['contains'])){
             if($contains == 'all'){
                 $query = "SELECT count(*) as numTweets FROM $topic where created_at between '$startTime' and '$endTime'";
             }else{
-                 $query = "SELECT count(*) as numTweets FROM $topic where text like '%$tableNames%' and created_at between '$startTime' and '$endTime'";
+                 $query = "SELECT count(*) as numTweets FROM $topic where text like '%$contains%' and created_at between '$startTime' and '$endTime'";
             }
             $sql_result = mysql_query($query,$link) or die('Errant query:  '.$query);
             $result = mysql_fetch_assoc($sql_result);
