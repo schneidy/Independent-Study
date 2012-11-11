@@ -106,33 +106,6 @@ function overallInit(){
 };
 
 
-// Twitter Totals
-function twitterTables(){
-    
-    // Sets heading
-    d3.select("#sideBarTitle")
-        .text("Total Tweets");
-    
-    
-    // Shows Tweets
-    d3.json("./php/lib.php?tableNames", function(json){
-        d3.select("#svgSideBar")
-            .selectAll("p")
-                .data(json.result)
-            .enter()
-            .append("div")
-            .attr("class", "twitTopics")
-            .attr("id", function(d){return d.tableName;})
-            .append("p")
-            .text(function(d){
-                var tweetSubjects = d.tableName.replace( /([a-z])([A-Z])/, "$1 $2");
-                return tweetSubjects;})
-            .append("p")
-            .text(function(d){return d.numTweets});
-    });
-
-}
-
 // Bar Chart for comparing total tweets between search terms
 function initialBarChart(topic){
     var url = "./php/lib.php?tableNames=" + topic;
