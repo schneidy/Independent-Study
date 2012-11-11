@@ -100,6 +100,8 @@ function overallInit(){
     //Setting up the bar chart
     initialBarChart("all");
 
+    //Initial Tweets Shown
+    dispTweetsInitial();
 };
 
 
@@ -173,7 +175,8 @@ function initialBarChart(topic){
             .attr("width", function(d){return x(d.numTweets)})
             .attr("height", 20)
             .attr("totalTweets", function(d){return d.numTweets})
-            .on("click", function(d){dispTweets(d, topic);});
+            .attr("tweetSearch", function(d){return d.tableName})
+            .on("click", function(){dispTweetsUpdate(this, topic)});
 
         // Total number of tweets for each search term
         bars.selectAll("text")
@@ -186,6 +189,7 @@ function initialBarChart(topic){
             .attr("text-anchor", "start")
             .attr("fill", "black")
             .attr("stroke", "none")
+            .style("stroke-width", "3px")
             .text(function(d){return d.numTweets})
 
         // Tweet Search
@@ -219,7 +223,7 @@ function updateBarChart(topic){
         // reload data
         var bars = chart.selectAll('rect')
             .data(data.result)
-            .on("click", function(d){dispTweets(d, topic);});
+            .on("click", function(){dispTweetsUpdate(this, topic)});
 
         // tranforms bars into new data
         bars.attr("class", "update")
@@ -239,20 +243,57 @@ function updateBarChart(topic){
         // changes the tweet topic
         d3.select("#tweetTopic").text(function(){return topic == "all" ? "All Tweets" : topic});
     });
+
+    // Clears selection
+    d3.selectAll(".selected")
+        .style("stroke", "none")
+        .attr("class", "");
+    // Shows new default tweets
+    dispTweetsUpdate(null, topic)
+
+    
 }
 
-function dispTweets(bar, topic){
-    var searchTerm = bar.tableName;
-    var url = './php/lib.php?topic='+searchTerm;
-    url += topic != 'all' ? '&contains='+topic : '';
-    var tweetHolder = d3.select("#tweetContainer");;
-
+function dispTweetsInitial(){
+    var url = './php/lib.php?topic=allTweets';
+    var tweetHolder = d3.select("#tweetContainer");
 
     d3.json(url, function(json){
-        var tweets = tweetHolder.selectAll('p')
-            .data(json.tweets)
-        .enter().append('p')
-            .text(function(d){return d.tweet.text});
+    var tweets = tweetHolder.selectAll('p')
+        .data(json.tweets)
+    .enter().append('p')
+        .text(function(d){return d.tweet.text});
     });
+}
 
+function dispTweetsUpdate(bar, topic){
+    
+    var tweetHolder = d3.select("#tweetContainer");
+    if(bar != null){
+        var searchTerm = d3.select(bar).attr("tweetSearch");
+        var url = './php/lib.php?topic='+searchTerm;
+        url += topic != 'all' ? '&contains='+topic : '';
+
+        d3.json(url, function(json){
+            var tweets = tweetHolder.selectAll('p')
+                .data(json.tweets)
+                .text(function(d){return d.tweet.text});
+        });
+
+        d3.selectAll(".selected")
+            .style("stroke", "none")
+            .attr("class", "");
+
+        d3.select(bar)
+            .attr("class", "selected")
+            .style("stroke", "purple")
+            .style("stroke-width", "3px");
+    }else{
+        var url = './php/lib.php?topic=allTweets&contains='+topic;
+        d3.json(url, function(json){
+            var tweets = tweetHolder.selectAll('p')
+                .data(json.tweets)
+                .text(function(d){return d.tweet.text});
+        });
+    }
 }
