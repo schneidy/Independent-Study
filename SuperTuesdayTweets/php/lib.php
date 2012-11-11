@@ -736,5 +736,43 @@ if(isset($_GET['topic']) && isset($_GET['contains']) && isset($_GET['count'])
 	@mysql_close($link);
 }
 
+/* Creates the json file for the timeline
+Arguments:
+    timeline - to know that it will return the json file.
+    contains - word of phrase required in tweet text.
+*/
+if(isset($_GET['timeline']) && isset($_GET['contains'])){
+    $contains = $_GET['contains'];
+    $timeline = $_GET['timeline'];
+
+    $link = mysql_connect($server,$user,$pwd) or die('Cannot connect to the DB');
+	mysql_select_db($db,$link) or die('Cannot select the DB');
+    $result;
+
+    header('Content-type: application/json');
+    $output = array();
+
+    foreach($topics as &$topic){
+        $time = mktime(0, 0, 0, 3, 6, 2012);
+        $timeArray = array();
+        for($i = -1800; $i < 90000; $i += 1800){ //start looking before midnight, for a day and an hour, every half hour
+            $startTime = date("Y-m-d H:i:s",$time + $i);
+            $endTime = date("Y-m-d H:i:s", ($time + $i + 1800));
+            $query = "SELECT count(*) as numTweets FROM $topic where text like '%$tableNames%' and created_at between '$startTime' and '$endTime'";
+            $sql_result = mysql_query($query,$link) or die('Errant query:  '.$query);
+            $result = mysql_fetch_assoc($sql_result);
+            $timePoint = array($endTime => $result['numTweets']);
+            $timeArray[] = $timePoint;
+        }
+        $topic_array = array('tableName' => $topic, 'timePoints' => $timeArray);
+        $output[] = $topic_array;
+
+    }
+    echo json_encode(array('result' => $output));
+
+    /* disconnect from the db */
+	@mysql_close($link);
+}
+
 
 ?>
