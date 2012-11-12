@@ -112,7 +112,7 @@ function overallInit(){
     dispTweetsInitial();
 
     //
-    initalTimeline("tax");
+    initalTimeline("all");
 };
 
 
@@ -285,16 +285,16 @@ function dispTweetsUpdate(bar, topic){
 // Initial timeline
 function initalTimeline(topic){
 
-    var width = 900, height = 500;
-    var svg = d3.select("body").append("svg")
+    var width = 370, height = 205;
+    var svg = d3.select("#sideBar").append("svg")
         .attr("id", "graphSVG")
         .attr("width", width)
         .attr("height", height)
         .append("g")
-        .attr("transform", "translate(100, 0)");
+        .attr("transform", "translate(50, 0)");
 
     var x = d3.time.scale()
-        .range([0, width-100]);
+        .range([0, width-70]);
     var y = d3.scale.linear()
         .range([height-20, 0]);
     var color = d3.scale.category10();
@@ -344,6 +344,7 @@ function initalTimeline(topic){
         svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0, " + (height-20) + ")")
+            .style('font-size', 10)
             .call(xAxis);
 
         svg.append("g")

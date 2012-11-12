@@ -72,6 +72,10 @@ nav li:hover{
     width: 300px;
 }
 
+graphSVG {
+    font-size: 12;
+}
+
 .axis path,
 .axis line {
   fill: none;
