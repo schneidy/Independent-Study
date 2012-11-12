@@ -1,7 +1,7 @@
 <?php
 include ("../../settings.php");
 
-$topics = array("SuperTuesday", "Obama", "Romney", "Santorum", "Gingrich", "Santorum");
+$topics = array("SuperTuesday", "Obama", "Romney", "Santorum", "Gingrich", "RonPaul");
 
 /* Basic Tweet Query
 Arguments:
@@ -755,9 +755,9 @@ if(isset($_GET['timeline']) && isset($_GET['contains'])){
     foreach($topics as &$topic){
         $time = mktime(0, 0, 0, 3, 6, 2012);
         $timeArray = array();
-        for($i = -1800; $i < 90000; $i += 1800){ //start looking before midnight, for a day and an hour, every half hour
+        for($i = -3600; $i < 90000; $i += 3600){ //start looking before midnight, for a day and an hour, every hour
             $startTime = date("Y-m-d H:i:s",$time + $i);
-            $endTime = date("Y-m-d H:i:s", ($time + $i + 1800));
+            $endTime = date("Y-m-d H:i:s", ($time + $i + 3600));
             if($contains == 'all'){
                 $query = "SELECT count(*) as numTweets FROM $topic where created_at between '$startTime' and '$endTime'";
             }else{
@@ -765,7 +765,7 @@ if(isset($_GET['timeline']) && isset($_GET['contains'])){
             }
             $sql_result = mysql_query($query,$link) or die('Errant query:  '.$query);
             $result = mysql_fetch_assoc($sql_result);
-            $timePoint = array($endTime => $result['numTweets']);
+            $timePoint = array('time' => $endTime, 'totalTweets' => $result['numTweets']);
             $timeArray[] = $timePoint;
         }
         $topic_array = array('tableName' => $topic, 'timePoints' => $timeArray);

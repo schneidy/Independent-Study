@@ -110,6 +110,9 @@ function overallInit(){
 
     //Initial Tweets Shown
     dispTweetsInitial();
+
+    //
+    initalTimeline("tax");
 };
 
 
@@ -277,4 +280,93 @@ function dispTweetsUpdate(bar, topic){
                 .text(function(d){return d.tweet.text});
         });
     }
+}
+
+// Initial timeline
+function initalTimeline(topic){
+
+    var width = 900, height = 500;
+    var svg = d3.select("body").append("svg")
+        .attr("id", "graphSVG")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(100, 0)");
+
+    var x = d3.time.scale()
+        .range([0, width-100]);
+    var y = d3.scale.linear()
+        .range([height-20, 0]);
+    var color = d3.scale.category10();
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left");
+
+    var line = d3.svg.line()
+        .interpolate("basis")
+        .x(function(d) { return x(d.time); })
+        .y(function(d) { return y(d.totalTweets); });
+
+    var formatDate = d3.time.format("%Y-%m-%d %H:%M:%S");
+    
+    var url = './php/lib.php?timeline&contains=' + topic;
+    d3.json(url, function(json){
+
+        json.result.forEach(function(d){
+            d.timePoints.forEach(function(t){
+                t.time = formatDate.parse(t.time);
+            });
+        });
+
+        color.domain(json.result.map(function(d){return d.tableName}));
+
+        var searchTopics = color.domain().map(function(twitTopic, i){
+            return{
+                name: twitTopic,
+                values: json.result[i].timePoints
+            };
+        });
+
+        // Set the x domain to all possible times
+        var time = json.result[0].timePoints.map(function(d){return d.time});
+        x.domain(d3.extent(time));
+
+        // Set the y domain to min and max number of tweets
+        var maxTweets = d3.max(searchTopics.map(function(d){return d3.max(d.values.map(function(t){return parseInt(t.totalTweets)}));}));
+        var minTweets = d3.min(searchTopics.map(function(d){return d3.min(d.values.map(function(t){return parseInt(t.totalTweets)}));}));
+        y.domain([minTweets, maxTweets]);
+
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0, " + (height-20) + ")")
+            .call(xAxis);
+
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+        .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", ".71em")
+            .style("text-anchor", "end")
+            .text("Total Tweets Per Hour");
+
+        var timeline = svg.selectAll(".tweetLines")
+            .data(searchTopics)
+        .enter().append("g")
+            .attr("class", "tweetLines");
+
+        timeline.append("path")
+            .attr("class", "line")
+            .attr("d", function(d){return line(d.values);})
+            .style("stroke", function(d){return color(d.name)});
+
+    });
+
+
 }
