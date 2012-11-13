@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+	<title>Tutorial 1</title>
+    <link type="text/css" href="css/style.css" rel="stylesheet">
+    <script type="text/javascript" src="js/d3.v2.js"></script>
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+    <div id="holder">
+    <h1>D3.js: Colors!</h1>
+    <p>In the world of visualizations, contrast is key to understanding what the visualization is trying to represent. One of the easiest ways is to add a dash of color. While this might be an easy task for small visualizations, every color has to be written out. When scaling this to visualizations with larger data sets, the code becomes cumbersome. Lucky for us, D3.js allows programmers to color in their visualizations with just a few lines.</p>
+    <p>So lets start off with something simple.</p>
+    <div id="basicColors">
+        <h2>Basic Colors:</h2>
+        <div class="code">
+            <p>
+	    var <span class="var">svg</span> = d3.select(“<span class="string">body</span>”).append("<span class="string">svg</span>”)
+		    .attr(“<span class="string">id</span>”, ““<span class="string">svg</span>”)
+            .attr(“<span class="string">width</span>”, <span class="number">200</span>)
+		    .attr("<span class="string">height</span>”, <span class="number">200</span>);
+
+	    var <span class="var">circle</span> = svg.append(<span class="string">“circle”</span>)
+		    .attr(“<span class="string">"cx</span>", <span class="number">100</span>)
+    		    .attr("<span class="string">cy</span>", <span class="number">100</span>)
+    		    .attr("<span class="string">r</span>", <span class="number">20</span>)
+                .style("<span class="string">fill</span>", "<span class="string">red</span>");
+            </p>
+        </div>
+        <p>Here we are creating a basic svg object and attaching a circle to it. Within that circle object, we declared the style to have a fill of red. If you have worked with colors on websites or in other software, you know that the color can also be represented in other ways such as:<p>
+        <div class="grouping">
+            <p>Hexidecimal: #FF0000</p>
+            <p>RGB(Red, Green Blue): (255, 0, 0)</p>
+            <p>HSL(Hue, Saturation, and Light): hsl(0, 100%, 50%)</p>
+        </div>
+        <p>In order for D3 to replicate RGB and HSL values, it provides it’s own methods:</p>
+        <div class="grouping">
+            <p>d3.rgb(255, 0, 0)</p>
+            <p>d3.hsl(0, 1, 0.5)</p>
+        </div>
+        <p>Any of these methods can be plugged into the fill attribute and will have the exact same result as using the word “red”.</p>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+#holder{
+    display:block;
+    margin: 0 auto;
+    width: 700px;
+}
+
+.code{
+    display:block;
+    width: 250px;
+}
