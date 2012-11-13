@@ -81,11 +81,14 @@ function overallInit(){
             k = 4;
             centered = d;
 
-            //Updates the bar chart with total of tweets containing the state name within the tweet
+            // Updates the bar chart with total of tweets containing the state name within the tweet
             updateBarChart(d.properties.name);
+            // Updates the timeline
+            //updateTimeLine(d.properties.name);
         } else {
             centered = null;
             updateBarChart("all");
+            //updateTimeLine("all");
         }
 
         g.selectAll("path")
@@ -103,6 +106,7 @@ function overallInit(){
         d3.select("#states").transition().duration(1500).attr('transform', 'scale(1,1)');        
         var tweetTopic = this.topic.value;
         updateBarChart(tweetTopic);
+        //updateTimeLine(tweetTopic)
     });
 
     //Setting up the bar chart
@@ -111,8 +115,8 @@ function overallInit(){
     //Initial Tweets Shown
     dispTweetsInitial();
 
-    //
-    initalTimeline("all");
+    //Initial Timeline
+    //initalTimeline("all");
 };
 
 
@@ -357,7 +361,9 @@ function initalTimeline(topic){
             .style("text-anchor", "end")
             .text("Total Tweets Per Hour");
 
-        var timeline = svg.selectAll(".tweetLines")
+        var lineHolder = svg.append("g")
+            .attr('id', 'lineHolder');
+        var timeline = lineHolder.selectAll(".tweetLines")
             .data(searchTopics)
         .enter().append("g")
             .attr("class", "tweetLines");
@@ -366,8 +372,50 @@ function initalTimeline(topic){
             .attr("class", "line")
             .attr("d", function(d){return line(d.values);})
             .style("stroke", function(d){return color(d.name)});
-
     });
+}
+
+function updateTimeLine(topic){
+    var url = './php/lib.php?timeline&contains=' + topic;
+    d3.json(url, function(json){
+        var svg = d3.select("#graphSVG");
+        // Reformats the date
+        var formatDate = d3.time.format("%Y-%m-%d %H:%M:%S");
+        json.result.forEach(function(d){
+            d.timePoints.forEach(function(t){
+                t.time = formatDate.parse(t.time);
+            });
+        });
+
+        var color = d3.scale.category10();
+        color.domain(json.result.map(function(d){return d.tableName}));
+        var searchTopics = color.domain().map(function(twitTopic, i){
+            return{
+                name: twitTopic,
+                values: json.result[i].timePoints
+            };
+        });
+
+        var maxTweets = d3.max(searchTopics.map(function(d){return d3.max(d.values.map(function(t){return parseInt(t.totalTweets)}));}));
+        var minTweets = d3.min(searchTopics.map(function(d){return d3.min(d.values.map(function(t){return parseInt(t.totalTweets)}));}));
+        var y = d3.scale.linear();
+        y.domain([minTweets, maxTweets]);
+        var x = d3.time.scale();
+
+        var line = d3.svg.line()
+            .interpolate("basis")
+            .x(function(d) { return x(d.time); })
+            .y(function(d) { return y(d.totalTweets); });
 
 
+        //Applying the update
+        var timeline = svg.selectAll(".tweetLines")
+            .data(searchTopics);
+
+        var lines = d3.selectAll(".line")
+            .transition()
+            .duration(1500)
+            .attr("d", function(d){return line(d.values);});
+        console.log("Should have updated by now");
+    });
 }
