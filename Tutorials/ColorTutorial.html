@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-	<title>Tutorial 1</title>
+	<title>D3.js Color Tutorial</title>
     <link type="text/css" href="css/style.css" rel="stylesheet">
     <script type="text/javascript" src="js/d3.v2.js"></script>
     <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
@@ -40,6 +40,35 @@
             <p>d3.hsl(0, 1, 0.5)</p>
         </div>
         <p>Any of these methods can be plugged into the fill attribute and will have the exact same result as using the word “red”.</p>
+    </div>
+    <div id="manipulation">
+        <h2>Manipulation:</h2>
+        <p>Now that we know how to create a basic color for an object, what else can we do with it. D3 provides different methods for manipulating colors without the need of the coder to figure out any of the math.<p>
+        <p>Let’s say we want to make an object a darker shade of red. Instead of  looking through a large color chart to find the right shade, the method “darker()” can be added on. The color is then made darker by 70% of whatever scale you attach to it. In the opposite direction, the method “.brighter()” can be used to make the object brighter (no surprise here).</p>
+        <div class="code">
+            <p>
+            var red = d3.rgb(255, 0, 0);
+
+            var circle = svg.append(“circle”)
+		        .attr("cx", 50)
+    		    .attr("cy", 100)
+    		    .attr("r", 20)
+                .style(“fill”, red.brighter(2));
+
+            var circle = svg.append(“circle”)
+		        .attr("cx", 100)
+    		    .attr("cy", 100)
+    		    .attr("r", 20)
+                .style(“fill”, red);
+
+            var circle = svg.append(“circle”)
+		        .attr("cx", 150)
+    		    .attr("cy", 100)
+    		    .attr("r", 20)
+                .style(“fill”, red.darker(2));
+            </p>
+        </div>
+        <p>Here we can see the three different colors being displayed with only a little extra code, but with different shades.</p>
     </div>
 </div>
 </body>
