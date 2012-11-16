@@ -1,10 +1,40 @@
 #holder{
     display:block;
+    font: 14px Helvetica, arial, freesans, clean, sans-serif;
+    line-height: 1.4;
     margin: 0 auto;
-    width: 700px;
+    width: 800px;
 }
 
 .code{
+    background: #F8F8F8;
+    border: 1px solid #CCC;
     display:block;
-    width: 250px;
+    width: 400px;
 }
+
+.code p{
+    font-weight: 
+    margin-left: 10px;
+}
+
+.var{
+    color: red;
+}
+
+.string{
+    color: blue;
+}
+
+.number{
+    color: green;
+}
+
+ul{
+    list-style-type: none;
+}
+
+li a{
+    text-decoration: none;
+}
+

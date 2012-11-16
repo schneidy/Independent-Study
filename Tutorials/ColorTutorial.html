@@ -16,15 +16,15 @@
         <h2>Basic Colors:</h2>
         <div class="code">
             <p>
-	    var <span class="var">svg</span> = d3.select(“<span class="string">body</span>”).append("<span class="string">svg</span>”)
-		    .attr(“<span class="string">id</span>”, ““<span class="string">svg</span>”)
-            .attr(“<span class="string">width</span>”, <span class="number">200</span>)
-		    .attr("<span class="string">height</span>”, <span class="number">200</span>);
+	    var <span class="var">svg</span> = d3.select(“<span class="string">body</span>”).append("<span class="string">svg</span>”)</br>
+		    .attr(“<span class="string">id</span>”, ““<span class="string">svg</span>”)</br>
+            .attr(“<span class="string">width</span>”, <span class="number">200</span>)</br>
+		    .attr("<span class="string">height</span>”, <span class="number">200</span>);</br></br>
 
-	    var <span class="var">circle</span> = svg.append(<span class="string">“circle”</span>)
-		    .attr(“<span class="string">"cx</span>", <span class="number">100</span>)
-    		    .attr("<span class="string">cy</span>", <span class="number">100</span>)
-    		    .attr("<span class="string">r</span>", <span class="number">20</span>)
+	    var <span class="var">circle</span> = svg.append(<span class="string">“circle”</span>)</br>
+		    .attr(“<span class="string">"cx</span>", <span class="number">100</span>)</br>
+    		    .attr("<span class="string">cy</span>", <span class="number">100</span>)</br>
+    		    .attr("<span class="string">r</span>", <span class="number">20</span>)</br>
                 .style("<span class="string">fill</span>", "<span class="string">red</span>");
             </p>
         </div>
@@ -47,25 +47,25 @@
         <p>Let’s say we want to make an object a darker shade of red. Instead of  looking through a large color chart to find the right shade, the method “darker()” can be added on. The color is then made darker by 70% of whatever scale you attach to it. In the opposite direction, the method “.brighter()” can be used to make the object brighter (no surprise here).</p>
         <div class="code">
             <p>
-            var <span class="var">red</span> = d3.rgb(255, 0, 0);
+            var <span class="var">red</span> = d3.rgb(255, 0, 0);</br></br>
 
-            var <span class="var">circle1</span> = svg.append(“<span class="string">circle</span>”)
-		        .attr("<span class="string">cx</span>", <span class="number">50</span>)
-    		    .attr("<span class="string">cy</span>", <span class="number">100</span>)
-    		    .attr("<span class="string">r</span>", <span class="number">20</span>)
-                .style"(<span class="string">fill</span>”, <span class="var">red</span>.brighter(<span class="number">2</span>));
+            var <span class="var">circle1</span> = svg.append(“<span class="string">circle</span>”)</br>
+		        .attr("<span class="string">cx</span>", <span class="number">50</span>)</br>
+    		    .attr("<span class="string">cy</span>", <span class="number">100</span>)</br>
+    		    .attr("<span class="string">r</span>", <span class="number">20</span>)</br>
+                .style("<span class="string">fill</span>”, <span class="var">red</span>.brighter(<span class="number">2</span>));</br></br>
 
-            var <span class="var">circle2 = svg.append(“<span class="string">circle</span>”)
-		        .attr("<span class="string">cx</span>", <span class="number">100</span>)
-    		    .attr("<span class="string">cy</span>", <span class="number">100</span>)
-    		    .attr("<span class="string">r</span>", <span class="number">20</span>)
-                .style"(<span class="string">fill</span>”, <span class="var">red</span>);
+            var <span class="var">circle2</span> = svg.append(“<span class="string">circle</span>”)</br>
+		        .attr("<span class="string">cx</span>", <span class="number">100</span>)</br>
+    		    .attr("<span class="string">cy</span>", <span class="number">100</span>)</br>
+    		    .attr("<span class="string">r</span>", <span class="number">20</span>)</br>
+                .style"(<span class="string">fill</span>”, <span class="var">red</span>);</br></br>
 
-            var <span class="var">circle3 = svg.append(“circle”)
-		        .attr("<span class="string">cx", <span class="number">150)
-    		    .attr("<span class="string">cy", <span class="number">100)
-    		    .attr("<span class="string">r", <span class="number">20)
-                .style"(<span class="string">fill”, <span class="var">red</span>.darker(<span class="number">2));
+            var <span class="var">circle3</span> = svg.append(<span class="string">“circle</span>”)</br>
+		        .attr("<span class="string">cx</span>", <span class="number">150</span>)</br>
+    		    .attr("<span class="string">cy</span>", <span class="number">100</span>)</br>
+    		    .attr("<span class="string">r</span>", <span class="number">20</span>)</br>
+                .style("<span class="string">fill</span>”, <span class="var">red</span>.darker(<span class="number">2</span>));
             </p>
         </div>
         <p>Here we can see the three different colors being displayed with only a little extra code, but with different shades.</p>
@@ -79,17 +79,18 @@
             <p>Linear scales are functions that have a constant change. Think of it in the way of graphs. Usually, in graphs, the axises increase at a constant rate.</p>
             <div class='code'>
                 <p>
-                    var <span class="var">color</span> = d3.scale.linear().domain([<span class="number">1</span>,<span class="number">10</span>]).range([<span class="string">'red</span>', '<span class="string">blue'</span>]);
-                    var <span class="var">circle1</span> = svg.append(“<span class="string">circle</span>”)
-		                .attr("<span class="string">cx</span>", <span class="number">50</span>)
-    		            .attr("<span class="string">cy</span>", <span class="number">100</span>)
-    		            .attr("<span class="string">r</span>", <span class="number">20</span>)
-                        .style("<span class="string">fill</span>”, <span class="var">color</span>(<span class="number">2</span>));
+                    var <span class="var">color</span> = d3.scale.linear().domain([<span class="number">1</span>,<span class="number">10</span>]).range([<span class="string">'red</span>', '<span class="string">blue'</span>]);</br></br>
 
-                    var <span class="var">circle2 = svg.append(“<span class="string">circle</span>”)
-		                .attr(<span class="string">"cx</span>", <span class="number">50</span>)
-    		            .attr(<span class="string">"cy</span>", <span class="number">100</span>)
-    		            .attr(<span class="string">"r</span>", <span class="number">20</span>)
+                    var <span class="var">circle1</span> = svg.append(“<span class="string">circle</span>”)</br>
+		                .attr("<span class="string">cx</span>", <span class="number">50</span>)</br>
+    		            .attr("<span class="string">cy</span>", <span class="number">100</span>)</br>
+    		            .attr("<span class="string">r</span>", <span class="number">20</span>)</br>
+                        .style("<span class="string">fill</span>”, <span class="var">color</span>(<span class="number">2</span>));</br></br>
+
+                    var <span class="var">circle2</span> = svg.append(“<span class="string">circle</span>”)</br>
+		                .attr(<span class="string">"cx</span>", <span class="number">50</span>)</br>
+    		            .attr(<span class="string">"cy</span>", <span class="number">100</span>)</br>
+    		            .attr(<span class="string">"r</span>", <span class="number">20</span>)</br>
                         .style(<span class="string">“fill</span>”, <span class="var">color</span>(<span class="number">9</span>));
                 <p>                
             </div>
@@ -98,24 +99,29 @@
         <div id="categoricalScale">
             <p>D3.js has several color scales built in. These scales can be classified as ordinal scales, or in this context, a set of defined colors. The scales are:</p>
             <div class="grouping">
-                <p>category10() - #1f77b4 #ff7f0e #2ca02c #d62728 #9467bd #8c564b #e377c2 #7f7f7f#bcbd22 #17becf</p>
-                <p>category20() -  #1f77b4 #aec7e8 #ff7f0e #ffbb78 #2ca02c #98df8a #d62728 #ff9896#9467bd #c5b0d5 #8c564b #c49c94 #e377c2 #f7b6d2 #7f7f7f #c7c7c7 #bcbd22 #dbdb8d #17becf #9edae5</p>
-                <p>category20b() - #393b79 #5254a3 #6b6ecf #9c9ede #637939 #8ca252 #b5cf6b#cedb9c #8c6d31 #bd9e39 #e7ba52 #e7cb94 #843c39 #ad494a #d6616b #e7969c #7b4173 #a55194 #ce6dbd #de9ed6</p>
-                <p>category20c() - #3182bd #6baed6 #9ecae1 #c6dbef #e6550d #fd8d3c #fdae6b #fdd0a2#31a354 #74c476 #a1d99b #c7e9c0 #756bb1 #9e9ac8 #bcbddc #dadaeb #636363 #969696 #bdbdbd #d9d9d9</p>
+                <p>category10() - <span style="color:#1f77b4">#1f77b4</span> <span style="color:#ff7f0e">#ff7f0e</span> <span style="color:#2ca02c">#2ca02c</span> <span style="color:#d62728">#d62728</span> <span style="color:#9467bd">#9467bd</span> <span style="color:#8c564b">#8c564b</span> <span style="color:#e377c2">#e377c2</span> <span style="color:#7f7f7f">#7f7f7f</span> <span style="color:#bcbd22">#bcbd22</span> <span style="color:#17becf">#17becf</span></p>
+
+                <p>category20() -  <span style="color:#1f77b4">#1f77b4</span> <span style="color:#aec7e8">#aec7e8</span> <span style="color:#ff7f0e">#ff7f0e</span> <span style="color:#ffbb78">#ffbb78</span> <span style="color:#2ca02c">#2ca02c</span> <span style="color:#98df8a">#98df8a</span> <span style="color:#d62728">#d62728</span> <span style="color:#ff9896">#ff9896</span> <span style="color:#9467bd">#9467bd</span> <span style="color:#c5b0d5">#c5b0d5</span> <span style="color:#8c564b">#8c564b</span> <span style="color:#c49c94">#c49c94</span> <span style="color:#e377c2">#e377c2</span> <span style="color:#f7b6d2">#f7b6d2</span> <span style="color:#7f7f7f">#7f7f7f</span> <span style="color:#c7c7c7">#c7c7c7</span> <span style="color:#bcbd22">#bcbd22</span> <span style="color:#dbdb8d">#dbdb8d</span> <span style="color:#17becf">#17becf</span> <span style="color:#9edae5">#9edae5</span></p>
+
+                <p>category20b() - <span style="color:#393b79">#393b79</span> <span style="color:#5254a3">#5254a3</span> <span style="color:#6b6ecf">#6b6ecf</span> <span style="color:#9c9ede">#9c9ede</span> <span style="color:#637939">#637939</span> <span style="color:#8ca252">#8ca252</span> <span style="color:#b5cf6b">#b5cf6b</span> <span style="color:#cedb9c">#cedb9c</span> <span style="color:#8c6d31">#8c6d31</span> <span style="color:#bd9e39">#bd9e39</span> <span style="color:#e7ba52">#e7ba52</span> <span style="color:#e7cb94">#e7cb94</span> <span style="color:#843c39">#843c39</span> <span style="color:#ad494a">#ad494a</span> <span style="color:#d6616b">#d6616b</span> <span style="color:#e7969c">#e7969c</span> <span style="color:#7b4173">#7b4173</span> <span style="color:#a55194">#a55194</span> <span style="color:#ce6dbd">#ce6dbd</span> <span style="color:#de9ed6">#de9ed6</span></p>
+
+                <p>category20c() - <span style="color:#3182bd">#3182bd</span> <span style="color:#6baed6">#6baed6</span> <span style="color:#9ecae1">#9ecae1</span> <span style="color:#c6dbef">#c6dbef</span> <span style="color:#e6550d">#e6550d</span> <span style="color:#fd8d3c">#fd8d3c</span> <span style="color:#fdae6b">#fdae6b</span> <span style="color:#fdd0a2">#fdd0a2</span> <span style="color:#31a354">#31a354</span> <span style="color:#74c476">#74c476</span> <span style="color:#a1d99b">#a1d99b</span> <span style="color:#c7e9c0">#c7e9c0</span> <span style="color:#756bb1">#756bb1</span> <span style="color:#9e9ac8">#9e9ac8</span> <span style="color:#bcbddc">#bcbddc</span> <span style="color:#dadaeb">#dadaeb</span> <span style="color:#636363">#636363</span> <span style="color:#969696">#969696</span> <span style="color:#bdbdbd">#bdbdbd</span> <span style="color:#d9d9d9">#d9d9d9</span></p>
+
             </div>
             <div class="code">
                 <p>
-                    var <span class="var">color</span> = d3.scale.category20b();
-                    var <span class="var">circle</span> = svg.append(“<span class="string">circle”)
-		                .attr("<span class="string">cx</span>", <span class="number">50</span>)
-    		            .attr("<span class="string">cy</span>", <span class="number">100</span>)
-    		            .attr("<span class="string">r</span>", <span class="number">20</span>)
-                        .style("<span class="string">fill</span>”,  <span class="var">color</span>(<span class="number">2</span>));
+                    var <span class="var">color</span> = d3.scale.category20b();</br></br>
 
-                    var  <span class="var">circle2</span> = svg.append(“<span class="string">circle</span>”)
-		                .attr(<span class="string">"cx</span>", <span class="number">50</span>)
-    		            .attr(<span class="string">"cy</span>", <span class="number">100</span>)
-    		            .attr(<span class="string">"r</span>", <span class="number">20</span>)
+                    var <span class="var">circle</span> = svg.append(“<span class="string">circle</span>”)</br>
+		                .attr("<span class="string">cx</span>", <span class="number">50</span>)</br>
+    		            .attr("<span class="string">cy</span>", <span class="number">100</span>)</br>
+    		            .attr("<span class="string">r</span>", <span class="number">20</span>)</br>
+                        .style("<span class="string">fill</span>”,  <span class="var">color</span>(<span class="number">2</span>));</br></br>
+
+                    var  <span class="var">circle2</span> = svg.append(“<span class="string">circle</span>”)</br>
+		                .attr(<span class="string">"cx</span>", <span class="number">50</span>)</br>
+    		            .attr(<span class="string">"cy</span>", <span class="number">100</span>)</br>
+    		            .attr(<span class="string">"r</span>", <span class="number">20</span>)</br>
                         .style(<span class="string">“fill</span>”, <span class="var">color</span>(<span class="number">9</span>));
                 </p>
             </div>
@@ -127,15 +133,16 @@
         <p>Part of what makes D3 stand out is how simple it is to add in transitions (sometimes called animations). Transitions can affect any attribute of any object manipulated within D3. In this case, transitioning one color to another.</p>
         <div class="code">
             <p>
-                var <span class="var">color</span> = d3.scale.category20b();
-                var <span class="var">circle</span> = svg.append("<span class="string">circle”</span>)
-	            	.attr("<span class="string">cx</span>", <span class="number">50</span>)
-    	        	.attr("<span class="string">cy</span>", <span class="number">100</span>)
-    		        .attr("<span class="string">r</span>", <span class="number">20</span>)
-                    .style("<span class="string">fill</span>”, <span class="var">color(<span class="number">1</span>))
-                    .on('<span class="string">click</span>', function(){
-                        d3.select(<span class="var">this</span>)
-                            .transition()
+                var <span class="var">color</span> = d3.scale.category20b();</br></br>
+
+                var <span class="var">circle</span> = svg.append("<span class="string">circle</span>")</br>
+	            	.attr("<span class="string">cx</span>", <span class="number">50</span>)</br>
+    	        	.attr("<span class="string">cy</span>", <span class="number">100</span>)</br>
+    		        .attr("<span class="string">r</span>", <span class="number">20</span>)</br>
+                    .style("<span class="string">fill</span>”, <span class="var">color</span>(<span class="number">1</span>))</br>
+                    .on('<span class="string">click</span>', function(){</br>
+                        d3.select(<span class="var">this</span>)</br>
+                            .transition()</br>
                             .duration(<span class="number">1000</span>)
                             .style('<span class="string">fill</span>', <span class="var">color</span>(Math.floor((Math.random()*<span class="number">20</span>)+<span class="number">1</span>)));
                     }); 
