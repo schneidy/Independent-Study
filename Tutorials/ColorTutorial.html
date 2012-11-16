@@ -70,6 +70,97 @@
         </div>
         <p>Here we can see the three different colors being displayed with only a little extra code, but with different shades.</p>
     </div>
+    <div id="scales">
+        <h2>Scales:</h2>
+        <p>So far we have been writing the fill for objects manually. However, when you apply data (for which D3 concentrates on), this becomes rather tedious and mathy. In order to solve this problem, D3 uses scales.</p>
+        <p>Scales basically take the range of the input and manipulates the data to fit the output range. We will focus on just two of the types of scales.</p>
+        <div id='linearScales'>
+            <h3>LinearScales</h3>
+            <p>Linear scales are functions that have a constant change. Think of it in the way of graphs. Usually, in graphs, the axises increase at a constant rate.</p>
+            <div class='code'>
+                <p>
+                    var color = d3.scale.linear().domain([1,10]).range(['red', 'blue']);
+                    var circle = svg.append(“circle”)
+		                .attr("cx", 50)
+    		            .attr("cy", 100)
+    		            .attr("r", 20)
+                        .style(“fill”, color(2));
+
+                    var circle2 = svg.append(“circle”)
+		                .attr("cx", 50)
+    		            .attr("cy", 100)
+    		            .attr("r", 20)
+                        .style(“fill”, color(9));
+                <p>                
+            </div>
+            <p>In the case of colors, the closer a variable is to the higher range of the domain, the closer it is to shade of the higher color range. In the case above, the first circle is closer to the red end of the color scale while the second color is closer to blue.</p>
+        </div>
+        <div id="categoricalScale">
+            <p>D3.js has several color scales built in. These scales can be classified as ordinal scales, or in this context, a set of defined colors. The scales are:</p>
+            <div class="grouping">
+                <p>category10() - #1f77b4 #ff7f0e #2ca02c #d62728 #9467bd #8c564b #e377c2 #7f7f7f#bcbd22 #17becf</p>
+                <p>category20() -  #1f77b4 #aec7e8 #ff7f0e #ffbb78 #2ca02c #98df8a #d62728 #ff9896#9467bd #c5b0d5 #8c564b #c49c94 #e377c2 #f7b6d2 #7f7f7f #c7c7c7 #bcbd22 #dbdb8d #17becf #9edae5</p>
+                <p>category20b() - #393b79 #5254a3 #6b6ecf #9c9ede #637939 #8ca252 #b5cf6b#cedb9c #8c6d31 #bd9e39 #e7ba52 #e7cb94 #843c39 #ad494a #d6616b #e7969c #7b4173 #a55194 #ce6dbd #de9ed6</p>
+                <p>category20c() - #3182bd #6baed6 #9ecae1 #c6dbef #e6550d #fd8d3c #fdae6b #fdd0a2#31a354 #74c476 #a1d99b #c7e9c0 #756bb1 #9e9ac8 #bcbddc #dadaeb #636363 #969696 #bdbdbd #d9d9d9</p>
+            </div>
+            <div class="code">
+                <p>
+                    var color = d3.scale.category20b();
+                    var circle = svg.append(“circle”)
+		                .attr("cx", 50)
+    		            .attr("cy", 100)
+    		            .attr("r", 20)
+                        .style(“fill”, color(2));
+
+                    var circle2 = svg.append(“circle”)
+		                .attr("cx", 50)
+    		            .attr("cy", 100)
+    		            .attr("r", 20)
+                        .style(“fill”, color(9));
+                </p>
+            </div>
+            <p>Unlike the previous scale, both the domain and range do not need to be defined, but can be added in for greater control.</p>
+        </div>
+    </div>
+    <div id="transitions">
+        <h2>Transitions:</h2>
+        <p>Part of what makes D3 stand out is how simple it is to add in transitions (sometimes called animations). Transitions can affect any attribute of any object manipulated within D3. In this case, transitioning one color to another.</p>
+        <div class="code">
+            <p>
+                var color = d3.scale.category20b();
+                var circle = svg.append(“circle”)
+	            	.attr("cx", 50)
+    	        	.attr("cy", 100)
+    		        .attr("r", 20)
+                    .style(“fill”, color(1))
+                    .on('click', function(){
+                        d3.select(this)
+                            .transition()
+                            .duration(1000)
+                            .style('fill', color(Math.floor((Math.random()*20)+1)));
+                    }); 
+            </p>
+        </div>
+        <p>In order to set up the transition, you must first declare that you are about to perform a transition and then give it a duration (in milliseconds). Then, you can apply whatever transition you want. Colors, as always, fall into the style method.</p>
+        <p>The above code allows you to click on the circle and a random color will slowly transition from the previous color.</p>
+    </div>
+    <div id="wrapUp">
+        <h2>Wrap Up:</h2>
+        <p>To summarize, colors are easy to manipulate when using D3. While some visualizations will only require manually set colors, the tools are there to help connect your data to whatever scale of colors it needs.</p>
+        <p>Feel free to test out any of the code within your javascript console or on your own projects.</p>
+    </div>
+    <div id="helpfulLinks">
+        <h2>Helpful Links:</h2>
+        <ul>
+            <li><a href="http://www.w3.org/TR/SVG/types.html#ColorKeywords">List of Color Keywords</a></li>
+            <li><a href="https://github.com/mbostock/d3/wiki/Colors">D3 Colors</a></li>
+            <li><a href="https://github.com/mbostock/d3/wiki/Ordinal-Scales">D3 Ordinal Scales</a></li>
+            <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales">D3 Quantitative Scales</a></li>
+            <li><a href="https://github.com/mbostock/d3/wiki/Transitions">D3 Transitions</a></li>
+            <li><a href="http://d3js.org/">D3 Homepage</a></li>
+            <li><a href="https://github.com/schneidy">My Github</a></li>
+        </ul>
+    </div>
 </div>
 </body>
 </html>
