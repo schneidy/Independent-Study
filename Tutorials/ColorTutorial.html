@@ -47,25 +47,25 @@
         <p>Let’s say we want to make an object a darker shade of red. Instead of  looking through a large color chart to find the right shade, the method “darker()” can be added on. The color is then made darker by 70% of whatever scale you attach to it. In the opposite direction, the method “.brighter()” can be used to make the object brighter (no surprise here).</p>
         <div class="code">
             <p>
-            var red = d3.rgb(255, 0, 0);
+            var <span class="var">red</span> = d3.rgb(255, 0, 0);
 
-            var circle = svg.append(“circle”)
-		        .attr("cx", 50)
-    		    .attr("cy", 100)
-    		    .attr("r", 20)
-                .style(“fill”, red.brighter(2));
+            var <span class="var">circle1</span> = svg.append(“<span class="string">circle</span>”)
+		        .attr("<span class="string">cx</span>", <span class="number">50</span>)
+    		    .attr("<span class="string">cy</span>", <span class="number">100</span>)
+    		    .attr("<span class="string">r</span>", <span class="number">20</span>)
+                .style"(<span class="string">fill</span>”, <span class="var">red</span>.brighter(<span class="number">2</span>));
 
-            var circle = svg.append(“circle”)
-		        .attr("cx", 100)
-    		    .attr("cy", 100)
-    		    .attr("r", 20)
-                .style(“fill”, red);
+            var <span class="var">circle2 = svg.append(“<span class="string">circle</span>”)
+		        .attr("<span class="string">cx</span>", <span class="number">100</span>)
+    		    .attr("<span class="string">cy</span>", <span class="number">100</span>)
+    		    .attr("<span class="string">r</span>", <span class="number">20</span>)
+                .style"(<span class="string">fill</span>”, <span class="var">red</span>);
 
-            var circle = svg.append(“circle”)
-		        .attr("cx", 150)
-    		    .attr("cy", 100)
-    		    .attr("r", 20)
-                .style(“fill”, red.darker(2));
+            var <span class="var">circle3 = svg.append(“circle”)
+		        .attr("<span class="string">cx", <span class="number">150)
+    		    .attr("<span class="string">cy", <span class="number">100)
+    		    .attr("<span class="string">r", <span class="number">20)
+                .style"(<span class="string">fill”, <span class="var">red</span>.darker(<span class="number">2));
             </p>
         </div>
         <p>Here we can see the three different colors being displayed with only a little extra code, but with different shades.</p>
@@ -79,18 +79,18 @@
             <p>Linear scales are functions that have a constant change. Think of it in the way of graphs. Usually, in graphs, the axises increase at a constant rate.</p>
             <div class='code'>
                 <p>
-                    var color = d3.scale.linear().domain([1,10]).range(['red', 'blue']);
-                    var circle = svg.append(“circle”)
-		                .attr("cx", 50)
-    		            .attr("cy", 100)
-    		            .attr("r", 20)
-                        .style(“fill”, color(2));
+                    var <span class="var">color</span> = d3.scale.linear().domain([<span class="number">1</span>,<span class="number">10</span>]).range([<span class="string">'red</span>', '<span class="string">blue'</span>]);
+                    var <span class="var">circle1</span> = svg.append(“<span class="string">circle</span>”)
+		                .attr("<span class="string">cx</span>", <span class="number">50</span>)
+    		            .attr("<span class="string">cy</span>", <span class="number">100</span>)
+    		            .attr("<span class="string">r</span>", <span class="number">20</span>)
+                        .style("<span class="string">fill</span>”, <span class="var">color</span>(<span class="number">2</span>));
 
-                    var circle2 = svg.append(“circle”)
-		                .attr("cx", 50)
-    		            .attr("cy", 100)
-    		            .attr("r", 20)
-                        .style(“fill”, color(9));
+                    var <span class="var">circle2 = svg.append(“<span class="string">circle</span>”)
+		                .attr(<span class="string">"cx</span>", <span class="number">50</span>)
+    		            .attr(<span class="string">"cy</span>", <span class="number">100</span>)
+    		            .attr(<span class="string">"r</span>", <span class="number">20</span>)
+                        .style(<span class="string">“fill</span>”, <span class="var">color</span>(<span class="number">9</span>));
                 <p>                
             </div>
             <p>In the case of colors, the closer a variable is to the higher range of the domain, the closer it is to shade of the higher color range. In the case above, the first circle is closer to the red end of the color scale while the second color is closer to blue.</p>
@@ -105,18 +105,18 @@
             </div>
             <div class="code">
                 <p>
-                    var color = d3.scale.category20b();
-                    var circle = svg.append(“circle”)
-		                .attr("cx", 50)
-    		            .attr("cy", 100)
-    		            .attr("r", 20)
-                        .style(“fill”, color(2));
+                    var <span class="var">color</span> = d3.scale.category20b();
+                    var <span class="var">circle</span> = svg.append(“<span class="string">circle”)
+		                .attr("<span class="string">cx</span>", <span class="number">50</span>)
+    		            .attr("<span class="string">cy</span>", <span class="number">100</span>)
+    		            .attr("<span class="string">r</span>", <span class="number">20</span>)
+                        .style("<span class="string">fill</span>”,  <span class="var">color</span>(<span class="number">2</span>));
 
-                    var circle2 = svg.append(“circle”)
-		                .attr("cx", 50)
-    		            .attr("cy", 100)
-    		            .attr("r", 20)
-                        .style(“fill”, color(9));
+                    var  <span class="var">circle2</span> = svg.append(“<span class="string">circle</span>”)
+		                .attr(<span class="string">"cx</span>", <span class="number">50</span>)
+    		            .attr(<span class="string">"cy</span>", <span class="number">100</span>)
+    		            .attr(<span class="string">"r</span>", <span class="number">20</span>)
+                        .style(<span class="string">“fill</span>”, <span class="var">color</span>(<span class="number">9</span>));
                 </p>
             </div>
             <p>Unlike the previous scale, both the domain and range do not need to be defined, but can be added in for greater control.</p>
@@ -127,17 +127,17 @@
         <p>Part of what makes D3 stand out is how simple it is to add in transitions (sometimes called animations). Transitions can affect any attribute of any object manipulated within D3. In this case, transitioning one color to another.</p>
         <div class="code">
             <p>
-                var color = d3.scale.category20b();
-                var circle = svg.append(“circle”)
-	            	.attr("cx", 50)
-    	        	.attr("cy", 100)
-    		        .attr("r", 20)
-                    .style(“fill”, color(1))
-                    .on('click', function(){
-                        d3.select(this)
+                var <span class="var">color</span> = d3.scale.category20b();
+                var <span class="var">circle</span> = svg.append("<span class="string">circle”</span>)
+	            	.attr("<span class="string">cx</span>", <span class="number">50</span>)
+    	        	.attr("<span class="string">cy</span>", <span class="number">100</span>)
+    		        .attr("<span class="string">r</span>", <span class="number">20</span>)
+                    .style("<span class="string">fill</span>”, <span class="var">color(<span class="number">1</span>))
+                    .on('<span class="string">click</span>', function(){
+                        d3.select(<span class="var">this</span>)
                             .transition()
-                            .duration(1000)
-                            .style('fill', color(Math.floor((Math.random()*20)+1)));
+                            .duration(<span class="number">1000</span>)
+                            .style('<span class="string">fill</span>', <span class="var">color</span>(Math.floor((Math.random()*<span class="number">20</span>)+<span class="number">1</span>)));
                     }); 
             </p>
         </div>
