@@ -19,15 +19,16 @@
             <div class="code">
                 <p>
 	        var <span class="var">svg</span> = d3.select(“<span class="string">body</span>”).append("<span class="string">svg</span>”)</br>
-		        .attr(“<span class="string">id</span>”, “<span class="string">svg</span>”)</br>
-                .attr(“<span class="string">width</span>”, <span class="number">200</span>)</br>
-		        .attr("<span class="string">height</span>”, <span class="number">200</span>);</br></br>
+		        <span class="indent1">.attr(“<span class="string">id</span>”, “<span class="string">svg</span>”)</span></br>
+                <span class="indent1">.attr(“<span class="string">width</span>”, <span class="number">200</span>)</span></br>
+		        <span class="indent1">.attr("<span class="string">height</span>”, <span class="number">200</span>);</span></br></br>
 
 	        var <span class="var">circle</span> = svg.append(<span class="string">“circle”</span>)</br>
-		        .attr(“<span class="string">"cx</span>", <span class="number">100</span>)</br>
-    		        .attr("<span class="string">cy</span>", <span class="number">100</span>)</br>
-    		        .attr("<span class="string">r</span>", <span class="number">20</span>)</br>
-                    .style("<span class="string">fill</span>", "<span class="string">red</span>");
+		        <span class="indent1">.attr(“<span class="string">"cx</span>", <span class="number">100</span>)</span></br>
+    		    <span class="indent1">.attr("<span class="string">cy</span>", <span class="number">100</span>)</span></br>
+    		    <span class="indent1">.attr("<span class="string">r</span>", <span class="number">20</span></span>)</br>
+                <span class="indent1">.style("<span class="string">fill</span>", "<span class="string">red</span>");</span>
+
                 </p>
             </div>
         </div>
@@ -53,23 +54,23 @@
                 <p>
                 var <span class="var">red</span> = d3.rgb(255, 0, 0);</br></br>
 
-                var <span class="var">circle1</span> = svg.append(“<span class="string">circle</span>”)</br>
-		            .attr("<span class="string">cx</span>", <span class="number">50</span>)</br>
-    		        .attr("<span class="string">cy</span>", <span class="number">100</span>)</br>
-    		        .attr("<span class="string">r</span>", <span class="number">20</span>)</br>
-                    .style("<span class="string">fill</span>”, <span class="var">red</span>.brighter(<span class="number">2</span>));</br></br>
+                var <span class="var">circle1</span> = svg.append(“<span class="string">circle</span>”)</span></br>
+		            <span class="indent1">.attr("<span class="string">cx</span>", <span class="number">50</span>)</span></br>
+    		        <span class="indent1">.attr("<span class="string">cy</span>", <span class="number">100</span>)</span></br>
+    		        <span class="indent1">.attr("<span class="string">r</span>", <span class="number">20</span>)</span></br>
+                    <span class="indent1">.style("<span class="string">fill</span>”, <span class="var">red</span>.brighter(<span class="number">2</span>));</span></br></br>
 
-                var <span class="var">circle2</span> = svg.append(“<span class="string">circle</span>”)</br>
-		            .attr("<span class="string">cx</span>", <span class="number">100</span>)</br>
-    		        .attr("<span class="string">cy</span>", <span class="number">100</span>)</br>
-    		        .attr("<span class="string">r</span>", <span class="number">20</span>)</br>
-                    .style"(<span class="string">fill</span>”, <span class="var">red</span>);</br></br>
+                var <span class="var">circle2</span> = svg.append(“<span class="string">circle</span>”)</span></br>
+		            <span class="indent1">.attr("<span class="string">cx</span>", <span class="number">100</span>)</span></br>
+    		        <span class="indent1">.attr("<span class="string">cy</span>", <span class="number">100</span>)</span></br>
+    		        <span class="indent1">.attr("<span class="string">r</span>", <span class="number">20</span>)</span></br>
+                    <span class="indent1">.style"(<span class="string">fill</span>”, <span class="var">red</span>);</span></br></br>
 
-                var <span class="var">circle3</span> = svg.append(<span class="string">“circle</span>”)</br>
-		            .attr("<span class="string">cx</span>", <span class="number">150</span>)</br>
-    		        .attr("<span class="string">cy</span>", <span class="number">100</span>)</br>
-    		        .attr("<span class="string">r</span>", <span class="number">20</span>)</br>
-                    .style("<span class="string">fill</span>”, <span class="var">red</span>.darker(<span class="number">2</span>));
+                var <span class="var">circle3</span> = svg.append(<span class="string">“circle</span>”)</span></br>
+		            <span class="indent1">.attr("<span class="string">cx</span>", <span class="number">150</span>)</span></br>
+    		        <span class="indent1">.attr("<span class="string">cy</span>", <span class="number">100</span>)</span></br>
+    		        <span class="indent1">.attr("<span class="string">r</span>", <span class="number">20</span>)</span></br>
+                    <span class="indent1">.style("<span class="string">fill</span>”, <span class="var">red</span>.darker(<span class="number">2</span>));</span>
                 </p>
             </div>
         </div>
@@ -88,16 +89,16 @@
                         var <span class="var">color</span> = d3.scale.linear().domain([<span class="number">1</span>,<span class="number">10</span>]).range([<span class="string">'red</span>', '<span class="string">blue'</span>]);</br></br>
 
                         var <span class="var">circle1</span> = svg.append(“<span class="string">circle</span>”)</br>
-		                    .attr("<span class="string">cx</span>", <span class="number">50</span>)</br>
-    		                .attr("<span class="string">cy</span>", <span class="number">100</span>)</br>
-    		                .attr("<span class="string">r</span>", <span class="number">20</span>)</br>
-                            .style("<span class="string">fill</span>”, <span class="var">color</span>(<span class="number">2</span>));</br></br>
+		                    <span class="indent1">.attr("<span class="string">cx</span>", <span class="number">50</span>)</span></br>
+    		                <span class="indent1">.attr("<span class="string">cy</span>", <span class="number">100</span>)</span></br>
+    		                <span class="indent1">.attr("<span class="string">r</span>", <span class="number">20</span>)</span></br>
+                            <span class="indent1">.style("<span class="string">fill</span>”, <span class="var">color</span>(<span class="number">2</span>));</span></br></br>
 
-                        var <span class="var">circle2</span> = svg.append(“<span class="string">circle</span>”)</br>
-		                    .attr(<span class="string">"cx</span>", <span class="number">50</span>)</br>
-    		                .attr(<span class="string">"cy</span>", <span class="number">100</span>)</br>
-    		                .attr(<span class="string">"r</span>", <span class="number">20</span>)</br>
-                            .style(<span class="string">“fill</span>”, <span class="var">color</span>(<span class="number">9</span>));
+                        var <span class="var">circle2</span> = svg.append(“<span class="string">circle</span>”)</span></br>
+		                    <span class="indent1">.attr(<span class="string">"cx</span>", <span class="number">50</span>)</span></br>
+    		                <span class="indent1">.attr(<span class="string">"cy</span>", <span class="number">100</span>)</span></br>
+    		                <span class="indent1">.attr(<span class="string">"r</span>", <span class="number">20</span>)</span></br>
+                            <span class="indent1">.style(<span class="string">“fill</span>”, <span class="var">color</span>(<span class="number">9</span>));</span>
                     </p>
                 </div>
             </div>
@@ -122,16 +123,16 @@
                         var <span class="var">color</span> = d3.scale.category20b();</br></br>
 
                         var <span class="var">circle</span> = svg.append(“<span class="string">circle</span>”)</br>
-		                    .attr("<span class="string">cx</span>", <span class="number">50</span>)</br>
-    		                .attr("<span class="string">cy</span>", <span class="number">100</span>)</br>
-    		                .attr("<span class="string">r</span>", <span class="number">20</span>)</br>
-                            .style("<span class="string">fill</span>”,  <span class="var">color</span>(<span class="number">2</span>));</br></br>
+		                    <span class="indent1">.attr("<span class="string">cx</span>", <span class="number">50</span>)</span></br>
+    		                <span class="indent1">.attr("<span class="string">cy</span>", <span class="number">100</span>)</span></br>
+    		                <span class="indent1">.attr("<span class="string">r</span>", <span class="number">20</span>)</span></br>
+                            <span class="indent1">.style("<span class="string">fill</span>”,  <span class="var">color</span>(<span class="number">2</span>));</span></br></br>
 
                         var  <span class="var">circle2</span> = svg.append(“<span class="string">circle</span>”)</br>
-		                    .attr(<span class="string">"cx</span>", <span class="number">50</span>)</br>
-    		                .attr(<span class="string">"cy</span>", <span class="number">100</span>)</br>
-    		                .attr(<span class="string">"r</span>", <span class="number">20</span>)</br>
-                            .style(<span class="string">“fill</span>”, <span class="var">color</span>(<span class="number">9</span>));
+		                    <span class="indent1">.attr(<span class="string">"cx</span>", <span class="number">50</span>)</span></br>
+    		                <span class="indent1">.attr(<span class="string">"cy</span>", <span class="number">100</span>)</span></br>
+    		                <span class="indent1">.attr(<span class="string">"r</span>", <span class="number">20</span>)</span></br>
+                            <span class="indent1">.style(<span class="string">“fill</span>”, <span class="var">color</span>(<span class="number">9</span>));</span>
                     </p>
                 </div>
             </div>
@@ -147,15 +148,15 @@
                     var <span class="var">color</span> = d3.scale.category20b();</br></br>
 
                     var <span class="var">circle</span> = svg.append("<span class="string">circle</span>")</br>
-	            	    .attr("<span class="string">cx</span>", <span class="number">50</span>)</br>
-    	        	    .attr("<span class="string">cy</span>", <span class="number">100</span>)</br>
-    		            .attr("<span class="string">r</span>", <span class="number">20</span>)</br>
-                        .style("<span class="string">fill</span>”, <span class="var">color</span>(<span class="number">1</span>))</br>
-                        .on('<span class="string">click</span>', function(){</br>
-                            d3.select(<span class="var">this</span>)</br>
-                                .transition()</br>
-                                .duration(<span class="number">1000</span>)
-                                .style('<span class="string">fill</span>', <span class="var">color</span>(Math.floor((Math.random()*<span class="number">20</span>)+<span class="number">1</span>)));
+	            	    <span class="indent1">.attr("<span class="string">cx</span>", <span class="number">50</span>)</span></br>
+    	        	    <span class="indent1">.attr("<span class="string">cy</span>", <span class="number">100</span>)</span></br>
+    		            <span class="indent1">.attr("<span class="string">r</span>", <span class="number">20</span>)</span></br>
+                        <span class="indent1">.style("<span class="string">fill</span>”, <span class="var">color</span>(<span class="number">1</span>))</span></br>
+                        <span class="indent1">.on('<span class="string">click</span>', function(){</span></br>
+                            <span class="indent2">d3.select(<span class="var">this</span>)</span></br>
+                                 <span class="indent2">.transition()</span></br>
+                                 <span class="indent2">.duration(<span class="number">1000</span>)</span></br>
+                                 <span class="indent2">.style('<span class="string">fill</span>', <span class="var">color</span>(Math.floor((Math.random()*<span class="number">20</span>)+<span class="number">1</span>)));
                         }); 
                 </p>
             </div>

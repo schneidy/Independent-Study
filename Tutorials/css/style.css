@@ -19,7 +19,7 @@
     display: block;
     float: left;
     padding: 3px;
-    width: 400px;
+    width: 420px;
 }
 
 .code p{
@@ -48,6 +48,14 @@ svg{
 .grouping{
     display: block;
     margin-left: 25px;
+}
+
+.indent1{
+    margin-left: 20px;
+}
+
+.indent2{
+    margin-left: 40px;
 }
 
 ul{
