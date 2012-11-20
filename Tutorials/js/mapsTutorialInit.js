@@ -1,21 +1,21 @@
 var width = 350;
-var height = 300;
+var height = 200;
 var NYPath;
 var json;
 
 $(document).ready(function(){
    
     // showing single state from path
-    //singleState();
+    singleState();
 
     // Albers USA map
-    //albersMap();
+    albersMap();
 
     // Choropleth
-    //choropleth();
+    choropleth();
 
    // Coordinates map
-   //coordsMap();
+   coordsMap();
 
    //Final Map
    finalMap();
@@ -24,7 +24,7 @@ $(document).ready(function(){
 
 
 function singleState(){
-    var svg = d3.select('body').append('svg')
+    var svg = d3.select('#prebuildCodeHolder').append('svg')
             .attr('width', width)
             .attr('height', height);
 
@@ -41,7 +41,7 @@ function singleState(){
 
 
 function albersMap(){
-    var svg = d3.select('body').append('svg')
+    var svg = d3.select('#albersMapHolder').append('svg')
         .attr('width', width)
         .attr('height', height);
     var projection = d3.geo.albersUsa();
@@ -65,7 +65,7 @@ function albersMap(){
 
 
 function choropleth(){
-    var svg = d3.select('body').append('svg')
+    var svg = d3.select('#colorHolder').append('svg')
         .attr('width', width)
         .attr('height', height);
     var states = svg.append('g')
@@ -90,7 +90,7 @@ function choropleth(){
 
 
 function coordsMap(){
-    var svg = d3.select('body').append('svg')
+    var svg = d3.select('#coordHolder').append('svg')
         .attr('width', width)
         .attr('height', height);
     var states = svg.append('g')
@@ -123,7 +123,7 @@ function coordsMap(){
 function finalMap(){
     
     var centered;
-    var svg = d3.select('body').append('svg')
+    var svg = d3.select('#zoomHolder').append('svg')
         .attr('width', width)
         .attr('height', height);
 

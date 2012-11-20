@@ -9,5 +9,213 @@
     <script type="text/javascript" src="js/mapsTutorialInit.js"></script>
 </head>
 <body>
+<div id="holder">
+    <h1>D3.js: Colors!</h1>
+    <p>During the past year, maps were one of the most used tools in visualizing the demographics, current poll results, and where money was spent for the 2012 election. Election maps could be found almost every day within the New York Times, The Huffington Post, or even The Guardian. The tool that powered those maps and made them interactive was D3.</p>
+    <p>While the election season maybe over, D3’s tools for maps can be used in whatever way you want. Here, we will go over how simple it is to create a basic map, and show what extra features you can add in to you visualization.</p>
+    <div id="addingMap">
+        <h2>Adding a Map:</h2>
+        <p>Maps can be made of three ways. Using pre-build svg paths that you can easily find on wikipedia, geo paths, or using geo projections.</p>
+        <p>Both geo paths and geo projections are based off of the GeoJson standard for manipulating geographic data.</p>
+        <p>GeoJson is a format for encoding a variety of geographic data structures. It is often used in GIS applications and other websites. As it is so popular, there are several websites that allow you to grab the GeoJson of whatever map you need.</p>
+        <div id="preBuiltPaths">
+            <h3>Prebuilt Paths</h3>
+            <p>When wandering through Wikipedia or even Google Images, you may have noticed premade svg maps. These maps are great for using in interactive visualizations.</p>
+            <p>SVG maps are made up paths. Paths are instructions for how to draw a non basic shape. Think of it as a connecting the dots coloring sheet. But instead of connecting the numbers in order, it connects different locations on the svg object like this:</p>
+            
+            <p class="longCode">&lt;path d="M 100 100 L 200 200”&gt;&lt;/path&gt;</p>
+
+            <p>Say you wanted to use the basic shape of the state of New York that you found on wikipedia (
+            <a href= "http://en.wikipedia.org/wiki/File:New_York_Counties.svg">New York Counties.svg</a>
+            ). All you have to do is grab the data from the path object and copy it into your javascript script like below.</p>
+
+            <div id="prebuildCodeHolder" class="example">
+                <p class="code">
+                
+                var svg = d3.select('body').append('svg')</br>
+                    .attr('width', width))</br>
+                    .attr('height', height);</br>
+                var group = svg.append('g');</br></br>
+
+                var NYPath = "M7.0371 120.844l-0.6373 11.9674 … -1.0232 0.1923z”;</br></br>
+
+                var ny = group.append('path')</br>
+                    .attr('d', NYPath)</br>
+                    .style('fill', 'grey')</br>
+                    .style('stroke', 'black')</br>
+                    .style('stroke-width', 1);
+
+                </p>
+            </div>
+        <p>As always, you start out with declaring your basic SVG object. Then, declare the path of the map you want to draw (type “NYPath” in your javascript console to view the full path). Add a group to hold the path object. Finally add in the data from the path you copied into it’s own path object. Now you can reference the map whenever you want.</p>
+        <p>However in this method of creating maps, it is rather difficult to add in location data. There is where GeoJson comes in handy.</p>
+    </div>
+    <div id="geoPathsProjections">
+        <h3>Geo Paths and Projections</h3>
+        <p>Geo Paths and Geo Projects go hand in hand with each other within D3.</p>
+        <p>Like the built in d3.svg.line function or the svg path in the above example, geo paths generate non basic shapes, but using either a geometry or GeoJson object to connect the dots.</p>
+        <p>Geo Projections can be added onto geo paths to connect the geo data to different built in types of map projections. Types of map projections built in includes:</p>
+        <div class="grouping">
+            <p><a href="http://en.wikipedia.org/wiki/Mercator_projection">Mercator</a> - flat map of the world</p>
+            <p><a href="http://en.wikipedia.org/wiki/Albers_projection">Albers</a> - conic map projection where distortion slightly occurs for shape and size, but not as much for parellel lines</p>
+            <p><a href="http://en.wikipedia.org/wiki/Albers_projection">Albers USA</a> - same projection methods as Albers, but contains all 50 states and Puerto Rico, but without Canada</p>
+            <p><a href="http://en.wikipedia.org/wiki/Lambert_azimuthal_equal-area_projection">Azimuthal</a> - equidistant and equal-area projections (think of a globe)</p>
+            <p><a href="https://github.com/d3/d3-plugins/tree/projection/geo/projection">Projections Plugin</a> - along with a whole plugin of extra projections you can add in</p>
+        </div>
+        <p>Here is the Albers USA projection that was most commonly used during the election season.</p>
+        <div id="albersMapHolder" class="example">
+            <div id="albersCode" class="code">
+                <p>
+
+                    var projection = d3.geo.albersUsa();</br>
+                    group.attr(‘transorm’, ‘scale(.3, .3)’’);</br></br>
+
+                    d3.json('json/us-states.json', function(collection) {</br>
+                        group.selectAll('path')</br>
+            	            .data(collection.features)</br>
+        	            .enter().append('path')</br>
+                	        .attr('d', d3.geo.path().projection(projection))</br>
+                	        .attr('id', function(d){return d.properties.name.replace(/\s+/g, '')})</br>
+               	            .style('fill', 'gray')</br>
+               	            .style('stroke', 'white')</br>
+               	            .style('stroke-width', '1');</br>
+                    }
+
+                </p>
+            </div>
+        </div>
+        <p>In order to create the projection, the type of projection must be declared first. For the example, I transformed the group holding the state paths in order to fit. Before any of the paths can be created, the data needs to become accessible from the d3.json method and then entered into the paths through .data() and .enter(). The last difference from any other svg shape is that the the d (data for path) attribute is given the projection information to draw out the state correctly. </p>
+        <p>I have added in the names of the states as the ids and the geo json data through the variable “json” into the visualization so you can experiment with the visualization.</p>
+    </div>
+    <div id="manipulation">
+        <h2>Manipulation</h2>
+        <p>Now that we have our map, it is time to make it interactive.</p>
+        <div id="color">
+            <h3>Color</h3>
+            <p>Choropleth maps are some of the most popular types of map visualizations made using D3. A choropleth map is a themed map where colors are based off of a standard statistic that can be compared.</p>
+            <p>In order to create this type of map, it only takes a few extra lines of code.</p>
+            <div id="colorHolder" class="example">
+                <div id="colorCode" class="code">
+                    <p>
+                
+
+                    var projection = d3.geo.albersUsa();</br>
+                    var color = d3.scale.linear().domain([1,12]).range(['red', 'blue']);</br></br>
+
+                    group.attr(‘tranfsorm’, ‘scale(.3, .3)’’);</br></br>
+
+                    d3.json('json/us-states.json', function(collection) {</br>
+                        group.selectAll('path')</br>
+            	            .data(collection.features)</br>
+        	            .enter().append('path')</br>
+                	        .attr('d', d3.geo.path().projection(projection))</br>
+                	        .attr('id', function(d){return d.properties.name.replace(/\s+/g, '')})</br>
+               	            .style('fill', function(d){return color( d.properties.name.replace(/\s+/g, '').length);})</br>
+               	            .style('stroke', 'white')</br>
+               	            .style('stroke-width', '1');</br>
+                    }
+
+
+                    <p>
+                </div>
+            </div>
+            <p>When comparing this example to the previous example, the only two differences are the creation of the color scale, and the function within the fill attribute to calculate the color based on the length of the state name. The shorter names are red, while the longer names are blue. You can learn how the color scales work by looking at my <a href='ColorTutorial.html'>color tutorial</a>.</p>
+        </div>
+        <div id="coords">
+            <h3>Marking Coordinates</h3>
+            <p>Often when working with maps, marks are left to note important locations (cities, landmarks, traps). With the projection system in place on our map, all we have to do is add in marker with our our coordinates.</p>
+            <div id="coordHolder" class="example">
+               <div id="coordCode" class="code">
+                   <p>
+               
+                    var projection = d3.geo.albersUsa();</br>
+                    var coords = projection(['-77.679863', '43.088015']);</br></br>
+
+                    
+                    group.append('circle')</br>
+                        .attr('cx', coords[0])</br>
+                        .attr('cy', coords[1])</br>
+                        .attr('r', 10)</br>
+                        .style('fill', 'red');
+                   <p>
+               </div>
+            </div>
+            <p>Using the same project system as the previous example, all we have to do is plug in our coordinates. Then, use those coordinates to center your marker (Rochester, NY in this case).</p>
+        </div>
+        <div id="zoom">
+            <h3>Click to Zoom</h3>
+            <p>With coordinates on a map, or in cases of finer detail, zooming into a map becomes useful. The creator of D3, Mike Bostock, created this gist (<a href="http://bl.ocks.org/2206590">http://bl.ocks.org/2206590</a>) of code that makes clicking into a location on a map quick and easy  Here is the code applied to the last two examples put together.</p>
+            <div id="zoomHolder" class="example">
+                <div id="zoomCode" class="code">
+                    <p>
+
+    var centered;</br></br>
+
+    var projection = d3.geo.albersUsa();</br>
+    var path = d3.geo.path()</br>
+        .projection(projection);</br>
+    group.attr('transform', 'scale(.3, .3)');</br></br>
+
+    var color = d3.scale.linear().domain([1,12]).range(['red', 'blue']);</br></br>
+
+    d3.json('json/us-states.json', function(collection) {</br>
+        group.selectAll('path')</br>
+            .data(collection.features)</br>
+        .enter().append('path')</br>
+            .attr('d', d3.geo.path().projection(projection))</br>
+            .attr('id', function(d){return d.properties.name.replace(/\s+/g, '')})</br>
+            .style('fill', function(d){return color( d.properties.name.replace(/\s+/g, '').length);})</br>
+            .style('stroke', 'white')</br>
+            .style('stroke-width', '1')</br>
+            .on('click', click);</br></br>
+
+        function click(d) {</br>
+            var x = 0,</br>
+            y = 0,</br>
+            k = .3;</br></br>
+
+            if (d && centered !== d) {</br>
+                var centroid = path.centroid(d);</br>
+                x = -centroid[0] + width/4;</br>
+                y = -centroid[1] + width/4;</br>
+                k = 2;</br>
+                centered = d;</br>
+            } else {</br>
+                centered = null;</br>
+            }</br></br>
+
+            group.selectAll("path")</br>
+                .classed("active", centered && function(d) { return d === centered; });</br></br>
+
+            group.transition()</br>
+                .duration(1000)</br>
+                .attr("transform", "scale(" + k + ")translate(" + x + width/2 + "," + y + ")")</br>
+                .style("stroke-width", 1.5 / k + "px");</br>
+        }</br></br>
+
+    });
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="wrapUp">
+        <h2>Wrap Up:</h2>
+        <p>To summarize, maps are relatively easy to build using D3. Once you have a map, there is a whole world of possibilities of what you can visualize.</p>
+        <p>Feel free to test out any of the code within your javascript console or on your own projects.</p>
+    </div>
+    <div id="links">
+        <h2>Helpful Links:</h2>
+        <ul>
+            <li><a href="https://github.com/mbostock/d3/wiki/Geo-Paths">Geo Paths</a></li>
+            <li><a href="https://github.com/mbostock/d3/wiki/Geo-Projections#wiki-albersUsa">Geo Projections</a></li>
+            <li><a href="https://github.com/d3/d3-plugins/tree/projection/geo/projection">D3 Projections plugin</a></li>
+            <li><a href="http://bl.ocks.org/2206590">Click to zoom example</a></li>
+            <li><a href="http://d3js.org/">D3 Homepage</a></li>
+            <li><a href="https://github.com/schneidy">My Github</a></li>
+        </ul>
+    </div>
+</div>
 </body>
 </html>
