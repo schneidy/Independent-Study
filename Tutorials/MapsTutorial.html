@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 	<title>D3.js Map Tutorial</title>
-    <link type="text/css" href="css/mapTutorialStyle.css" rel="stylesheet">
+    <link type="text/css" href="css/style.css" rel="stylesheet">
     <script type="text/javascript" src="js/d3.v2.js"></script>
     <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
     <script type="text/javascript" src="js/mapsTutorialInit.js"></script>
@@ -30,22 +30,27 @@
             ). All you have to do is grab the data from the path object and copy it into your javascript script like below.</p>
 
             <div id="prebuildCodeHolder" class="example">
-                <p class="code">
+                <div id="brebuildCode" class="code">
+                <p>
                 
-                var svg = d3.select('body').append('svg')</br>
-                    .attr('width', width))</br>
-                    .attr('height', height);</br>
-                var group = svg.append('g');</br></br>
+                var <span class="var">length</span> = <span class="number">300</span>;</br>
+                var <span class="var">width</span> = <span class="number">350</span>;</br></br>
 
-                var NYPath = "M7.0371 120.844l-0.6373 11.9674 … -1.0232 0.1923z”;</br></br>
+                var <span class="var">svg</span> = d3.select('<span class="string">body</span>').append('<span class="string">svg</span>')</br>
+                     <span class="indent1">.attr('<span class="string">width</span>', <span class="var">width</span>))</span></br>
+                     <span class="indent1">.attr('<span class="string">height</span>', <span class="var">height</span>);</span></br>
+                var <span class="var">group</span> = <span class="var">svg</span>.append('<span class="string">g</span>');</br></br>
 
-                var ny = group.append('path')</br>
-                    .attr('d', NYPath)</br>
-                    .style('fill', 'grey')</br>
-                    .style('stroke', 'black')</br>
-                    .style('stroke-width', 1);
+                var <span class="var">NYPath</span> = "<span class="string">M7.0371 120.844l-0.6373 11.9674 … -1.0232 0.1923z</span>”;</br></br>
+
+                var <span class="var">ny</span> = <span class="var">group</span>.append('<span class="string">path</span>')</br>
+                     <span class="indent1">.attr('<span class="string">d</span>', <span class="var">NYPath</span>)</span></br>
+                     <span class="indent1">.style('<span class="string">fill</span>', '<span class="string">grey</span>')</span></br>
+                     <span class="indent1">.style('<span class="string">stroke</span>', '<span class="string">black</span>')</span></br>
+                     <span class="indent1">.style('<span class="string">stroke-width</span>', <span class="number">1</span>);</span>
 
                 </p>
+                </div>
             </div>
         <p>As always, you start out with declaring your basic SVG object. Then, declare the path of the map you want to draw (type “NYPath” in your javascript console to view the full path). Add a group to hold the path object. Finally add in the data from the path you copied into it’s own path object. Now you can reference the map whenever you want.</p>
         <p>However in this method of creating maps, it is rather difficult to add in location data. There is where GeoJson comes in handy.</p>
@@ -67,18 +72,18 @@
             <div id="albersCode" class="code">
                 <p>
 
-                    var projection = d3.geo.albersUsa();</br>
-                    group.attr(‘transorm’, ‘scale(.3, .3)’’);</br></br>
+                    var <span class="var">projection</span> = d3.geo.albersUsa();</br>
+                    <span class="var">group</span>.attr(‘<span class="string">transorm</span>’, ‘<span class="string">scale(.3, .3)</span>’);</br></br>
 
-                    d3.json('json/us-states.json', function(collection) {</br>
-                        group.selectAll('path')</br>
-            	            .data(collection.features)</br>
-        	            .enter().append('path')</br>
-                	        .attr('d', d3.geo.path().projection(projection))</br>
-                	        .attr('id', function(d){return d.properties.name.replace(/\s+/g, '')})</br>
-               	            .style('fill', 'gray')</br>
-               	            .style('stroke', 'white')</br>
-               	            .style('stroke-width', '1');</br>
+                    d3.json('<span class="string">json/us-states.json</span>', function(<span class="var">collection</span>) {</br>
+                         <span class="indent1"><span class="var">group</span>.selectAll('<span class="string">path</span>')</span></br>
+            	             <span class="indent2">.data(<span class="var">collection</span>.features)</span></br>
+        	             <span class="indent1">.enter().append('<span class="string">path</span>')</span></br>
+                	         <span class="indent2">.attr('<span class="string">d</span>', d3.geo.path().projection(<span class="var">projection</span>))</span></br>
+                	         <span class="indent2">.attr('<span class="string">id</span>', function(<span class="var">d</span>){return <span class="var">d</span>.properties.name.replace(/\s+/g, '')})</span></br>
+               	             <span class="indent2">.style('<span class="string">fill</span>', '<span class="string">gray</span>')</span></br>
+               	             <span class="indent2">.style('<span class="string">stroke</span>', '<span class="string">white</span>')</span></br>
+               	             <span class="indent2">.style('<span class="string">stroke-width</span>', <span class="number">1</span>);</span></br>
                     }
 
                 </p>
@@ -86,6 +91,7 @@
         </div>
         <p>In order to create the projection, the type of projection must be declared first. For the example, I transformed the group holding the state paths in order to fit. Before any of the paths can be created, the data needs to become accessible from the d3.json method and then entered into the paths through .data() and .enter(). The last difference from any other svg shape is that the the d (data for path) attribute is given the projection information to draw out the state correctly. </p>
         <p>I have added in the names of the states as the ids and the geo json data through the variable “json” into the visualization so you can experiment with the visualization.</p>
+    </div>
     </div>
     <div id="manipulation">
         <h2>Manipulation</h2>
@@ -99,20 +105,20 @@
                     <p>
                 
 
-                    var projection = d3.geo.albersUsa();</br>
-                    var color = d3.scale.linear().domain([1,12]).range(['red', 'blue']);</br></br>
+                    var <span class="var">projection</span> = d3.geo.albersUsa();</br>
+                    var <span class="var">color</span> = d3.scale.linear().domain([<span class="number">1</span>,<span class="number">12</span>]).range(['<span class="string">red</span>', '<span class="string">blue</span>']);</br></br>
 
-                    group.attr(‘tranfsorm’, ‘scale(.3, .3)’’);</br></br>
+                    <span class="var">group</span>.attr(‘<span class="string">tranfsorm</span>’, ‘<span class="string">scale(.3, .3)</span>’);</br></br>
 
-                    d3.json('json/us-states.json', function(collection) {</br>
-                        group.selectAll('path')</br>
-            	            .data(collection.features)</br>
-        	            .enter().append('path')</br>
-                	        .attr('d', d3.geo.path().projection(projection))</br>
-                	        .attr('id', function(d){return d.properties.name.replace(/\s+/g, '')})</br>
-               	            .style('fill', function(d){return color( d.properties.name.replace(/\s+/g, '').length);})</br>
-               	            .style('stroke', 'white')</br>
-               	            .style('stroke-width', '1');</br>
+                    d3.json('<span class="string">json/us-states.json</span>', function(<span class="var">collection</span>) {</br>
+                         <span class="indent1"><span class="var">group</span>.selectAll('<span class="string">path</span>')</span></br>
+            	             <span class="indent2">.data(<span class="var">collection</span>.features)</span></br>
+        	             <span class="indent1">.enter().append('<span class="string">path</span>')</span></br>
+                	        <span class="indent2">.attr('<span class="string">d</span>', d3.geo.path().projection(<span class="var">projection</span>))</span></br>
+                	        <span class="indent2">.attr('<span class="string">id</span>', function(<span class="var">d</span>){return <span class="var">d</span>.properties.name.replace(/\s+/g, '')})</span></br>
+               	            <span class="indent2">.style('<span class="string">fill</span>', function(<span class="var">d</span>){return <span class="var">color</span>( <span class="var">d</span>.properties.name.replace(/\s+/g, '').length);})</span></br>
+               	            <span class="indent2">.style('<span class="string">stroke</span>', '<span class="string">white</span>')</span></br>
+               	            <span class="indent2">.style('<span class="string">stroke-width</span>', <span class="number">1</span>);</span></br>
                     }
 
 
@@ -128,15 +134,15 @@
                <div id="coordCode" class="code">
                    <p>
                
-                    var projection = d3.geo.albersUsa();</br>
-                    var coords = projection(['-77.679863', '43.088015']);</br></br>
+                    var <span class="var">projection</span> = d3.geo.albersUsa();</br>
+                    var <span class="var">coords</span> = <span class="var">projection</span>(['<span class="string">-77.679863</span>', '<span class="string">43.088015</span>']);</br></br>
 
                     
-                    group.append('circle')</br>
-                        .attr('cx', coords[0])</br>
-                        .attr('cy', coords[1])</br>
-                        .attr('r', 10)</br>
-                        .style('fill', 'red');
+                    <span class="var">group</span>.append('<span class="string">circle</span>')</br>
+                        <span class="indent1">.attr('<span class="string">cx</span>', <span class="var">coords</span>[<span class="number">0</span>])</span></br>
+                        <span class="indent1">.attr('<span class="string">cy</span>', <span class="var">coords</span>[<span class="number">1</span>])</span></br>
+                        <span class="indent1">.attr('<span class="string">r</span>', <span class="number">10</span>)</span></br>
+                        <span class="indent1">.style('<span class="string">fill</span>', '<span class="string">red</span>');</span>
                    <p>
                </div>
             </div>
@@ -149,49 +155,49 @@
                 <div id="zoomCode" class="code">
                     <p>
 
-    var centered;</br></br>
+    var <span class="var">centered</span>;</br></br>
 
-    var projection = d3.geo.albersUsa();</br>
-    var path = d3.geo.path()</br>
-        .projection(projection);</br>
-    group.attr('transform', 'scale(.3, .3)');</br></br>
+    var <span class="var">projection</span> = d3.geo.albersUsa();</br>
+    var <span class="var">path</span> = d3.geo.path()</br>
+        <span class="indent1">.projection(<span class="var">projection</span>);</span></br>
+    <span class="var">group</span>.attr('<span class="string">transform</span>', '<span class="string">scale(.3, .3)</span>');</span></br></br>
 
-    var color = d3.scale.linear().domain([1,12]).range(['red', 'blue']);</br></br>
+    var <span class="var">color</span> = d3.scale.linear().domain([1</span>,12</span>]).range(['<span class="string">red</span>', '<span class="string">blue</span>']);</br></br>
 
-    d3.json('json/us-states.json', function(collection) {</br>
-        group.selectAll('path')</br>
-            .data(collection.features)</br>
-        .enter().append('path')</br>
-            .attr('d', d3.geo.path().projection(projection))</br>
-            .attr('id', function(d){return d.properties.name.replace(/\s+/g, '')})</br>
-            .style('fill', function(d){return color( d.properties.name.replace(/\s+/g, '').length);})</br>
-            .style('stroke', 'white')</br>
-            .style('stroke-width', '1')</br>
-            .on('click', click);</br></br>
+    d3.json('<span class="string">json/us-states.json</span>', function(<span class="var">collection</span>) {</br>
+        <span class="indent1"><span class="var">group</span>.selectAll(<span class="string">'path</span>')</span></br>
+            <span class="indent2">.data(<span class="var">collection</span>.features)</span></br>
+        <span class="indent1">.enter().append('<span class="string">path</span>')</span></br>
+            <span class="indent2">.attr('<span class="string">d</span>', d3.geo.path().projection(<span class="var">projection</span>))</span></br>
+            <span class="indent2">.attr('<span class="string">id</span>', function(<span class="var">d</span>){return <span class="var">d</span>.properties.name.replace(/\s+/g, '')}</span>)</br>
+            <span class="indent2">.style('<span class="string">fill</span>', function(<span class="var">d</span>){return <span class="var">color</span>( <span class="var">d</span>.properties.name.replace(/\s+/g, '').length);})</span></br>
+            <span class="indent2">.style('<span class="string">stroke</span>', '<span class="string">white</span>')</span></br>
+            <span class="indent2">.style('<span class="string">stroke-width</span>', 1</span>)</span></br>
+            <span class="indent2">.on('<span class="string">click</span>', click);</span></br></br>
 
-        function click(d) {</br>
-            var x = 0,</br>
-            y = 0,</br>
-            k = .3;</br></br>
+        <span class="indent1">function click(d</span>) {</span></br>
+            <span class="indent2">var <span class="var">x</span> = <span class="number">0</span>,</span></br>
+            <span class="indent2"><span class="var">y</span> = <span class="number">0</span>,</span></br>
+            <span class="indent2"><span class="var">k</span> = <span class="number">.3</span>;</span></br></br>
 
-            if (d && centered !== d) {</br>
-                var centroid = path.centroid(d);</br>
-                x = -centroid[0] + width/4;</br>
-                y = -centroid[1] + width/4;</br>
-                k = 2;</br>
-                centered = d;</br>
-            } else {</br>
-                centered = null;</br>
-            }</br></br>
+            <span class="indent2">if (<span class="var">d</span> && <span class="var">centered</span> !== <span class="var">d</span>) {</span></br>
+                <span class="indent3">var <span class="var">centroid</span> = <span class="var">path</span>.centroid(d</span>);</span></br>
+                <span class="indent3"><span class="var">x</span> = -<span class="var">centroid</span>[<span class="number">0</span>] + <span class="var">width</span>/<span class="number">4</span>;</span></br>
+                <span class="indent3"><span class="var">y</span> = -<span class="var">centroid</span>[<span class="number">1</span>] + <span class="var">height</span>/<span class="number">4</span>;</span></br>
+                <span class="indent3"><span class="var">k</span> = <span class="number">2</span>;</span></br>
+                <span class="indent3"><span class="var">centered</span> = <span class="var">d</span>;</span></br>
+            <span class="indent2">} else {</span></br>
+                <span class="indent3"><span class="var">centered</span> = null;</span></br>
+            <span class="indent2">}</span></br></br>
 
-            group.selectAll("path")</br>
-                .classed("active", centered && function(d) { return d === centered; });</br></br>
+            <span class="indent2"><span class="var">group</span>.selectAll("<span class="string">path"</span>)</span></br>
+                <span class="indent3">.classed("<span class="string">active</span>", <span class="var">centered</span> && function(<span class="var">d</span>) { return <span class="var">d</span> === <span class="var">centered</span>; });</span></br></br>
 
-            group.transition()</br>
-                .duration(1000)</br>
-                .attr("transform", "scale(" + k + ")translate(" + x + width/2 + "," + y + ")")</br>
-                .style("stroke-width", 1.5 / k + "px");</br>
-        }</br></br>
+            <span class="indent2"><span class="var">group</span>.transition()</span></br>
+                <span class="indent3">.duration(<span class="number">1000</span>)</span></br>
+                <span class="indent3">.attr("<span class="string">transform</span>", "<span class="string">scale(</span>" + <span class="var">k</span> + "<span class="string">)translate(</span>" + x</span> + <span class="var">width</span>/<span class="number">2</span> + ",</span>" + <span class="var">y</span> + "<span class="string">)</span>")</span></br>
+                <span class="indent3">.style("<span class="string">stroke-width</span>", <span class="number">1.5</span> / <span class="var">k</span> + "<span class="string">px</span>");</span></br>
+        <span class="indent1">}</span></br></br>
 
     });
 

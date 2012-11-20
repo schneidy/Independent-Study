@@ -168,7 +168,7 @@ function finalMap(){
             if (d && centered !== d) {
                 var centroid = path.centroid(d);
                 x = -centroid[0] + width/4;
-                y = -centroid[1] + width/4;
+                y = -centroid[1] + height/4;
                 k = 2;
                 centered = d;
             } else {

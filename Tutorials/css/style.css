@@ -3,6 +3,7 @@
     font: 14px Helvetica, arial, freesans, clean, sans-serif;
     line-height: 1.4;
     margin: 0 auto;
+    padding-bottom: 30px;
     width: 800px;
 }
 
@@ -66,4 +67,3 @@ li a{
     margin-left: 0;
     text-decoration: none;
 }
-
